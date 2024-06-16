@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: Header File
+# key: <hf>
+# --
+/**
+ * @file `(file-name-nondirectory (buffer-file-name))`
+ * @author `(idemacs/user-get-name)`
+ * @date `(format-time-string "%Y-%m-%d" (current-time))`
+ * @brief ${1:brief}
+ * @details ${2:details}
+ */
+
+#ifndef ${1:_`(upcase (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`_H_}
+#define $1
+
+$0
+
+#endif /* $1 */

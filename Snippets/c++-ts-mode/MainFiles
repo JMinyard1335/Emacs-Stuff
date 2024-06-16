@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: Main File
+# key: Main
+# --
+/**
+ * @file ${1:`(file-name-nondirectory (buffer-file-name))`}
+ * @author `(idemacs/user-get-name)`
+ * @date `(format-time-string "%Y-%m-%d" (current-time))`
+ * @details ${2:details}
+ */
+
+#include <iostream>
+
+int main(int argc, char* argv){
+    $0
+    return EXIT_SUCCESS;
+}

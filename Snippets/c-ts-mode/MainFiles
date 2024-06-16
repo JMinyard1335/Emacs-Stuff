@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: Main Files
+# key: Main
+# --
+/**
+ * @file `(file-name-nondirectory (buffer-file-name))`
+ * @author `(idemacs/user-get-name)`
+ * @date `(format-time-string "%Y-%m-%d" (current-time))`
+ * @brief ${1:brief}
+ * @details ${2:details}
+ */
+
+int main(int argc, char* argv){
+    $0
+    return 0;
+}

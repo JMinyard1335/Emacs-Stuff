@@ -1,0 +1,31 @@
+#+CATEGORY: Personal
+
+* Projects
+** TODO IDEmacs Ver:0.0.1                             :personal:project:code:
+   DEADLINE: <2024-06-30 +0d -1w>
+   :PROPERTIES:
+   :Description: IDEmacs Ver:0.0.1 is the first itteration of IDEmacs
+   :Created:  [2024-05-27 Mon 17:33]
+   :Personal_Docs: [[IDEmacs_file:~/Documents/IDEmacs/IDEmacs-0.0.1/]]
+   :Project:  IDEmacs
+   :END:
+*** DONE Documentation                                     :personal:project:
+    CLOSED: [2024-06-05 Wed 14:15] DEADLINE: <2024-06-03 +0d>
+    :PROPERTIES:
+    :Description: Update the documentation of the README
+    :Created:  [2024-05-27 Mon 17:46]
+    :Task:     [[IDEmacs_file:~/Documents/IDEmacs/IDEmacs-0.0.1/README.org]]
+    :Project:  IDEmacs
+    :END:
+* Family
+** DONE Memorial Day Cookout                        :personal:family:holiday:
+   CLOSED: [2024-05-27 Mon 16:24]
+   :PROPERTIES:
+   :DATE:     <2024-05-27 11:30 +0d>
+   :LOCATION: SpringPark Clubhouse
+   :END:
+
+* Reminders
+** TODO Check Email                                      :personal:reminders:
+   <2024-06-11 +1d>
+* Goals

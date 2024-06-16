@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: method
+# key: def
+# --
+def ${1:Method}(self,${2:args}):
+    $0

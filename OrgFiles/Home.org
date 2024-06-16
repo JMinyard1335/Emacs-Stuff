@@ -1,0 +1,5 @@
+#+CATEGORY: Home
+
+* Projects
+* Errands
+* Chores

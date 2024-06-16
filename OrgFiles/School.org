@@ -1,0 +1,69 @@
+#+CATEGORY: School
+
+* Classes
+** TODO Advanced Algorithims and Anaylsis                      :4349:school:class:
+ <2024-06-14 Fri 14:44-14:44 +1w>
+ <2024-06-10 Mon 14:44-14:44 +1w>
+ :PROPERTIES:
+ :Course_Number: 4349
+ :Section_Number: OU1
+ :Instructor: Yunhui Guo
+ :Location: FN 2.202
+ :Class_Directory: [[IDEmacs_file:~/Documents/University/cs4349/]]
+ :END:
+** TODO Automata Theory                                        :school:class:
+   <2024-06-11 Tue 09:28-09:28 +1w>
+   <2024-06-13 Thu 09:28-09:28 +1w>
+   :PROPERTIES:
+   :Course_Number: 4384
+   :Section_Number: OU1
+   :Instructor: Chris Davis
+   :Location: ECSS 2.312
+   :Class_Directory: [[IDEmacs_file:~/Documents/University/cs4384/]]
+   :END:
+* Assignments
+** DONE Sylibus Quiz                                   :homework:school:4384:
+   CLOSED: [2024-06-05 Wed 14:15] DEADLINE: <2024-05-31 +0d>
+   :PROPERTIES:
+   :Class: 4384
+   :Assigned: [2024-05-30 Thu 10:22]
+   :Assignment: NA
+   :END:
+** ASSIGNED assignment 1                               :homework:school:4349:
+   DEADLINE: <2024-06-12 23:59 +0d>
+   :PROPERTIES:
+   :Class:    Advanced Algorithms
+   :Assigned: [2024-06-05 Wed 14:16]
+   :Assignment: [[IDEmacs_file:~/Documents/University/cs4349/Assignments/assignment_1.org]]
+   :END:
+** TURNEDIN Assignment 00                              :homework:school:4384:
+   CLOSED: [2024-06-07 Fri 12:46] DEADLINE: <2024-06-11 23:59 +0d>
+   :PROPERTIES:
+   :Class:    Automata Theory
+   :Assigned: [2024-06-06 Thu 09:26]
+   :Assignment: [[IDEmacs_file:~/Documents/University/cs4384/Assignments/assignment_0.org]]
+   :END:
+* Projects
+* Exams
+**  Exam 1                                                 :exam:school:4384:
+   DEADLINE: <2024-06-25 11:00 +0d -1w>
+   :PROPERTIES:
+   :Class:    Automata Theory
+   :Assigned: [2024-06-13 Thu 10:14]
+   :Review:   [[IDEmacs_file:~/University/cs4384/Notes/lecture.org]]
+   :END:
+**  Exam 2                                                 :exam:school:4384:
+   DEADLINE: <2024-07-23 11:00 +0d -1w>
+   :PROPERTIES:
+   :Class:    Automata Theory
+   :Assigned: [2024-06-13 Thu 10:15]
+   :Review:   [[IDEmacs_file:~/University/cs4384/Notes/lecture.org]]
+   :END:
+**  Exam 3                                                 :exam:school:4384:
+   DEADLINE: <2024-08-08 11:00 +0d -1w>
+   :PROPERTIES:
+   :Class:    Automata Theory
+   :Assigned: [2024-06-13 Thu 10:17]
+   :Review:   [[IDEmacs_file:~/University/cs4384/Notes/lecture.org]]
+   :END:
+* Labs
