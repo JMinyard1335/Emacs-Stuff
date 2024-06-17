@@ -26,8 +26,6 @@
 
 (use-package which-key
   :ensure t
-  :init
-  (which-key-mode)
   :custom
   (setq which-key-idle-delay 1))
 

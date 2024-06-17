@@ -43,13 +43,13 @@
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :ensure t
-  :hook
-  (c-ts-mode . copilot-mode)
-  (cpp-ts-mode . copilot-mode)
-  (emacs-lisp-mode .copilot-mode)
-  (org-mode . copilot-mode)
-  (python-ts-mode . copilot-mode)
-  (java-ts-mode . copilot-mode)
+  ;; :hook
+  ;; (c-ts-mode . copilot-mode)
+  ;; (cpp-ts-mode . copilot-mode)
+  ;; (emacs-lisp-mode .copilot-mode)
+  ;; (org-mode . copilot-mode)
+  ;; (python-ts-mode . copilot-mode)
+  ;; (java-ts-mode . copilot-mode)
   :bind
   (:map copilot-completion-map
 	("C-<return>" . copilot-accept-completion)

@@ -26,8 +26,6 @@
 
 (use-package doom-modeline
   :ensure t
-  :init
-  (doom-modeline-mode 1)
   :custom
   (doom-modeline-height 40)
   (doom-modeline-bar-width 5)
@@ -49,6 +47,6 @@
   (doom-modeline-time t))
 ;; This is required to resize doom modeline so that it dosent block other buffers text.
 (advice-add #'fit-window-to-buffer :before (lambda (&rest _) (redisplay t)))
-
+(doom-modeline-mode)
 (provide 'modeline-setup)
 ;;; modeline-setup.el ends here
