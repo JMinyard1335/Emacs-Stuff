@@ -56,6 +56,8 @@
 	("C-<tab>" . copilot-accept-completion-by-word))
   :config
   (setq copilot-indent-offset-warning-disable t)
+  ;;(setq copilot--base-dir "~/.emacs.d/straight/repos/copilot.el/")
+  (setq copilot--server-executable ".emacs.d/.cache/copilot/lib/node_modules/copilot-node-server/bin/copilot-node-server")
   )
 ;(setq copilot--server-executable "~/.emacs.d/.cache/copilot/lib/node_modules/copilot-node-server")
 (defun darken-color (color percent)

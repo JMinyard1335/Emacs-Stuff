@@ -17,9 +17,13 @@
   :config
   (which-key-mode))
 (use-package ligatures-setup)
-(use-package copilot-setup)
-;(setq copilot--base-dir "~/.emacs.d/straight/repos/copilot.el/")
-(setq copilot--server-executable ".cache/copilot/lib/node_modules/copilot-node-server/bin/copilot-node-server")
+(use-package copilot-setup
+  :config
+  ;;(setq copilot--base-dir "~/.emacs.d/straight/repos/copilot.el/")
+  (setq copilot--server-executable ".emacs.d/.cache/copilot/lib/node_modules/copilot-node-server/bin/copilot-node-server"))
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
