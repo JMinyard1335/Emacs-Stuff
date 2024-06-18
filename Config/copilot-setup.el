@@ -55,8 +55,9 @@
 	("C-<return>" . copilot-accept-completion)
 	("C-<tab>" . copilot-accept-completion-by-word))
   :config
-  (setq copilot-indent-offset-warning-disable t))
-
+  (setq copilot-indent-offset-warning-disable t)
+  )
+;(setq copilot--server-executable "~/.emacs.d/.cache/copilot/lib/node_modules/copilot-node-server")
 (defun darken-color (color percent)
   "Darken a COLOR by a certain PERCENT."
   (let ((rgb (color-name-to-rgb color))
