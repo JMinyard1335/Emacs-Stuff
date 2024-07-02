@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: template
+# key: template
+# --
+/*
+ * @file template_class.cpp
+ * @author Symbol’s function definition is void: idemacs/user-get-name
+ * @date 2024-06-18
+ * @brief ${1:Description}
+ */
+template<typename T> class ${2:Name}{
+private:
+$0
+public:
+    
+};

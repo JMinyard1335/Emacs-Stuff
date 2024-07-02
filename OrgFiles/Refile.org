@@ -1,7 +1,0 @@
-#+CATEGORY: Completed
-
-* School
-* Home
-* Personal
-* Work
-* Other

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: shared_ptr
+# key: sptr=
+# --
+std::shared_ptr<${1:parent}> ${2:Name} = std::make_shared<${3:type}>(${4:args})

@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: OrgHeadings
+# key: headings
+# --
+#+TITLE: Assignment 2
+#+AUTHOR: Jachin Minyard
+#+DATE: `(format-time-string "%Y-%m-%d" (current-time))`
+:PROPERTIES:
+# Document Configuration:
+#+STARTUP: overview
+#+OPTIONS: toc:nil todo:nil
+#+LATEX_CLASS: article
+#+LATEX_CASS_OPTIONS: [a4paper, 12pt]
+#+LATEX_HEADER: \usepackage[margin=0.25IN]{geometry}
+#+LATEX_HEADER: \usepackage{amsmath}
+# Set up Tikz:
+#+LATEX_HEADER_EXTRA: \usepackage{tikz}
+#+LATEX_HEADER_EXTRA: \usetikzlibrary{automata, positioning}
+#+LATEX_HEADER_EXTRA: \tikzset{-> = stealth, node distance = 2cm, every state/.style={semithick, fill=gray!10}}
+:END:

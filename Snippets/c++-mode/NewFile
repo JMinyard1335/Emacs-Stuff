@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
-# name: Main File
-# key: Main
-# --
-/**
+# name: newFile
+# key: nf
+# -- 
+/*
  * @file ${1:`(file-name-nondirectory (buffer-file-name))`}
  * @author `(idemacs/user-get-name)`
  * @date `(format-time-string "%Y-%m-%d" (current-time))`

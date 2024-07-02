@@ -37,22 +37,19 @@
 
 (use-package c-ts-mode
   :ensure t
-  :hook ((c-ts-mode . eglot-ensure))
+  :hook
+  ((c-ts-mode . eglot-ensure))
+  ((c++-ts-mode . eglot-ensure))
+  ((c++-mode . eglot-ensure))
   :mode (("\\.c\\'" . c-ts-mode)
 	 ("\\.h\\'" . c-ts-mode)
-	 ("\\.cpp\\'" . c-ts-mode)
-	 ("\\.hpp\\'" . c-ts-mode)))
+	 ("\\.cpp\\'" . c++-mode)
+	 ("\\.hpp\\'" . c++-mode)))
 
 (use-package python
   :ensure t
   :hook ((python-ts-mode . eglot-ensure))
   :mode (("\\.py\\'" . python-ts-mode)))
-
-;; (use-package c++-ts-mode
-;;   :ensure t
-;;   :hook ((c++-ts-mode . eglot-ensure))
-;;   :mode (("\\.cpp\\'" . c++-ts-mode)
-;; 	 ("\\.hpp\\'" . c++-ts-mode)))
 
 (use-package java-ts-mode
   :ensure t
@@ -62,6 +59,10 @@
 (use-package highlight-indent-guides
   :ensure t
   :hook (python-ts-mode . highlight-indent-guides-mode))
+
+(setq c-default-style "k&r")
+(setq c-basic-offset 4)
+(c-set-offset 'substatement-open 0)
 
 (provide 'language-setup)
 ;;; language-setup.el ends here

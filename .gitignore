@@ -2,5 +2,5 @@
 \#*\#
 .\#*
 .projectile
-flycheck_*.el
-./OrgFiles/Private/
+flycheck_*.el		
+OrgFiles/Private/	
