@@ -60,11 +60,11 @@
   :ensure t
   :config
   (add-to-list 'yas-snippet-dirs snippets-dir))
-
 ;; (setq auto-insert-alist
 ;; 	'((("\\.\\(c\\|cpp\\|c++\\)\\'" . "c Source Files")
 ;; 	   . ["main.c" c-ts-mode my/autoinsert-yas-expand])))
 (yas-global-mode 1)
+
 
 (provide 'autoinsert-setup)
 ;;; autoinsert-setup.el ends here
