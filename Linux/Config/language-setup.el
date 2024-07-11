@@ -60,9 +60,11 @@
   :ensure t
   :hook (python-ts-mode . highlight-indent-guides-mode))
 
-(setq c-default-style "k&r")
-(setq c-basic-offset 4)
-(c-set-offset 'substatement-open 0)
+(defun my-c/c++-hook ()
+  (electric-pair-mode)
+  (setq c-basic-offset 4)
+  (c-set-offset 'substatement-open 0)
+  (setq c-default-style "bsd"))
 
 (provide 'language-setup)
 ;;; language-setup.el ends here
