@@ -37,8 +37,6 @@
 
 (use-package company
   :ensure t
-  :hook
-  (prog-mode . company-mode)
   :config (setq company-idle-delay 0.1
 		company-minimum-prefix-length 1))
 
@@ -48,8 +46,7 @@
   (company-mode . company-box-mode))
 
 (use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :ensure t)
 
 (provide 'tools-setup)
 ;;; tools-setup.el ends here

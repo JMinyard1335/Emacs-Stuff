@@ -27,20 +27,26 @@
 ;; - Java
 
 ;;; Code:
+(defun my/c-ts-mode-hook ()
+  (setq c-ts-mode-indent-style "k&r")
+  (setq c-ts-mode-indent-offset 4)
+  (c-set-offset 'substatement-open 0))
+
+(defun my/c-mode-hook ()
+  (setq c-default-style "k&r")
+  (setq c-basic-offset 4)
+  (c-set-offset 'substatement-open 0))
 
 (use-package eglot
   :ensure t
   :bind (:map eglot-mode-map
-	      ("<f5>" . eglot-recompile)
-	      ("C-c r" . eglot-rename)
-	      ("C-c a" . eglot-code-actions)))
+	 ("<f5>" . eglot-recompile)
+	 ("C-c r" . eglot-rename)
+	 ("C-c a" . eglot-code-actions)))
 
 (use-package c-ts-mode
   :ensure t
-  :hook
-  ((c-ts-mode . eglot-ensure))
-  ((c++-ts-mode . eglot-ensure))
-  ((c++-mode . eglot-ensure))
+  :hook ((c-ts-mode . eglot-ensure))
   :mode (("\\.c\\'" . c-ts-mode)
 	 ("\\.h\\'" . c-ts-mode)
 	 ("\\.cpp\\'" . c++-mode)
@@ -59,12 +65,6 @@
 (use-package highlight-indent-guides
   :ensure t
   :hook (python-ts-mode . highlight-indent-guides-mode))
-
-(defun my-c/c++-hook ()
-  (electric-pair-mode)
-  (setq c-basic-offset 4)
-  (c-set-offset 'substatement-open 0)
-  (setq c-default-style "bsd"))
 
 (provide 'language-setup)
 ;;; language-setup.el ends here

@@ -39,11 +39,11 @@
   (visual-fill-column-mode 1))
 
 (defun my/org-font-setup ()
-  (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-  (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-  (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
@@ -52,7 +52,6 @@
   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
 (use-package org-capture)
-
 (use-package org
   :init (setq inhibit-compacting-font-caches t)
   :hook (org-mode . my/org-mode-setup)
@@ -71,30 +70,25 @@
   (setq org-adapt-indentation t)
   (setq org-agenda-tags-column 40)
   (setq org-hide-drawer-startup t)
+  (add-to-list 'org-agenda-files "~/test.org")
   (my/org-font-setup))
-
 (use-package org-super-agenda
   :ensure t
   :hook (org-agenda-mode . org-super-agenda-mode))
-
 (use-package org-modern
   :ensure t)
-
 (use-package org-bullets
   :ensure t
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
 (use-package olivetti
   :ensure t
   :hook
   (org-agenda-mode . olivetti-mode))
-
 (use-package doct
   :ensure t
   :commands (doct))
-
 (use-package visual-fill-column
   :ensure t
   :hook (org-mode . my/org-mode-visual-fill))

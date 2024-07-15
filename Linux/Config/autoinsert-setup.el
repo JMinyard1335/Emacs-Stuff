@@ -23,6 +23,40 @@
 ;; This file will set up the autoinsert package and the yasnippet package. These packages allow the user to insert text templates into files. The autoinsert package will insert text templates into files when they are created, whereas the yasnippet package will insert text templates into files when the user types a certain keyword and presses the tab key.
 
 ;;; Code:
+;; My Template functions, These funtions are used to insert text templates into files. ----------------
+(defun my-org-template ()
+  "Creates a boilerplate for org files set up various settings."
+    (let ((title (read-string "Title: "))
+          (author (read-string "Author: " user-full-name)))
+      (insert "#+TITLE: " title "\n")
+      (insert "#+AUTHOR: " author "\n")
+      (insert ":PROPERTIES:\n")
+      (insert "#+LATEX_CLASS: article\n")
+      (insert "#+LATEX_HEADER: \\usepackage[margin=.75in]{geometry}\n")
+      (insert "#+STARTUP: overview\n")
+      (insert "#+OPTIONS: toc:nil\n")
+      (insert "#+OPTIONS: todo:nil\n")
+      (insert "#+OPTIONS: H:6\n")
+      (insert "#+OPTIONS: num:1\n")
+      (insert ":END:\n\n")))
+
+(defun my-c-template ()
+  "Creates a boilerplate for c files. Inserts some initial comments."
+  (let ((author (read-string "Author: " user-full-name))
+	(date (format-time-string "%Y-%m-%d"))
+	(file (file-name-nondirectory (buffer-file-name))))
+    (insert "/*\n")
+    (insert " * @file " file "\n")
+    (insert " * @brief Brief description of the file\n")
+    (insert " * @author " author "\n")
+    (insert " * @date " date "\n")
+    (insert " */\n\n"))
+  )
+(defun my-c++-template ())
+(defun my-python-template ())
+(defun my-java-template ())
+;;------------------------------------------------------------------------------------------------
+
 (defcustom snippets-dir ""
   "Directory containing yasnippet snippets."
   :type 'directory
@@ -36,16 +70,6 @@
   (setq snippets-dir file)
   (message "Yasnippets Directory set to: %s" snippets-dir))
 
-;; (defun my/autoinsert-yas-expand()
-;;   "Replace text in yasnippet template."
-;;   (yas/expand-snippet (buffer-string) (point-min) (point-max)))
-
-;; (defun my/autoinsert-yas-expand (key)
-;;   "Expand a yasnippet for the current mode."
-;;   (let ((snippet (yas-lookup-snippet key)))
-;;     (when snippet
-;;       (yas-expand-snippet snippet))))
-
 (defun my/autoinsert-yas-expand()
   "Replace text in yasnippet template."
   (end-of-line)
@@ -53,17 +77,16 @@
 
 (use-package autoinsert
   :config
-  (setq auto-insert-query nil)             
-  (auto-insert-mode 1))
+  (auto-insert-mode 1)
+  (add-to-list 'auto-insert-alist
+               '(org-mode . my-org-template)))
 
 (use-package yasnippet
   :ensure t
   :config
-  (add-to-list 'yas-snippet-dirs snippets-dir))
-;; (setq auto-insert-alist
-;; 	'((("\\.\\(c\\|cpp\\|c++\\)\\'" . "c Source Files")
-;; 	   . ["main.c" c-ts-mode my/autoinsert-yas-expand])))
-(yas-global-mode 1)
+  (add-to-list 'yas-snippet-dirs snippets-dir)
+  (yas-global-mode 1))
+
 
 
 (provide 'autoinsert-setup)
