@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: LatexExport
+# key: Lexport
+# --
+#+BEGIN_EXPORT latex
+\begin{center}
+$0
+\end{center}
+#+END_EXPORT

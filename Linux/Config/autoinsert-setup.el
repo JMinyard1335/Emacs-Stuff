@@ -32,12 +32,14 @@
       (insert "#+AUTHOR: " author "\n")
       (insert ":PROPERTIES:\n")
       (insert "#+LATEX_CLASS: article\n")
-      (insert "#+LATEX_HEADER: \\usepackage[margin=.75in]{geometry}\n")
       (insert "#+STARTUP: overview\n")
       (insert "#+OPTIONS: toc:nil\n")
       (insert "#+OPTIONS: todo:nil\n")
       (insert "#+OPTIONS: H:6\n")
       (insert "#+OPTIONS: num:1\n")
+      (insert "#+LATEX_HEADER: \\usepackage[margin=.75in]{geometry}\n")
+      (insert "#+LATEX_HEADER_EXTRA: \\usepackage{tikz}\n")
+      (insert "#+LATEX_HEADER_EXTRA: \\usepackage{graphicx}\n")
       (insert ":END:\n\n")))
 
 (defun my-c-template ()
@@ -50,10 +52,12 @@
     (insert " * @brief Brief description of the file\n")
     (insert " * @author " author "\n")
     (insert " * @date " date "\n")
-    (insert " */\n\n"))
-  )
+    (insert " */\n\n")))
+
 (defun my-c++-template ())
+
 (defun my-python-template ())
+
 (defun my-java-template ())
 ;;------------------------------------------------------------------------------------------------
 
@@ -86,8 +90,6 @@
   :config
   (add-to-list 'yas-snippet-dirs snippets-dir)
   (yas-global-mode 1))
-
-
 
 (provide 'autoinsert-setup)
 ;;; autoinsert-setup.el ends here
