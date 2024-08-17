@@ -37,7 +37,7 @@
   "Customizations for the GUI of emacs."
   :group 'IDEmacs)
 
-(defcustom my-font-name "VictorMonoNerdFontMono"
+(defcustom my-font-name "Courier"
   "the name of the font family to be appilied to the default face."
   :type 'string
   :group 'my-gui)

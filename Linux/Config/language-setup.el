@@ -27,15 +27,14 @@
 ;; - Java
 
 ;;; Code:
-(defun my/c-ts-mode-hook ()
-  (setq c-ts-mode-indent-style "k&r")
-  (setq c-ts-mode-indent-offset 4)
-  (c-set-offset 'substatement-open 0))
-
-(defun my/c-mode-hook ()
+(defun my/c-hook ()
+  "This functions was created to enable options for both c and c++ modes."
   (setq c-default-style "k&r")
-  (setq c-basic-offset 4)
-  (c-set-offset 'substatement-open 0))
+  (setq c-ts-mode-set-style "k&r")
+  (setq c-basic-offset 4))
+
+(defun my/python-mode-hook ()
+  )
 
 (use-package eglot
   :ensure t
@@ -49,8 +48,8 @@
   :hook ((c-ts-mode . eglot-ensure))
   :mode (("\\.c\\'" . c-ts-mode)
 	 ("\\.h\\'" . c-ts-mode)
-	 ("\\.cpp\\'" . c++-mode)
-	 ("\\.hpp\\'" . c++-mode)))
+	 ("\\.cpp\\'" . c-ts-mode)
+	 ("\\.hpp\\'" . c-ts-mode)))
 
 (use-package python
   :ensure t
@@ -62,9 +61,10 @@
   :hook ((java-ts-mode . eglot-ensure))
   :mode (("\\.java\\'" . java-ts-mode)))
 
-(use-package highlight-indent-guides
+(use-package css-ts-mode
   :ensure t
-  :hook (python-ts-mode . highlight-indent-guides-mode))
+  :mode (("\\.css\\'" . css-ts-mode)))
+
 
 (provide 'language-setup)
 ;;; language-setup.el ends here

@@ -54,25 +54,20 @@
     (insert " * @date " date "\n")
     (insert " */\n\n")))
 
-(defun my-c++-template ())
-
-(defun my-python-template ())
-
-(defun my-java-template ())
 ;;------------------------------------------------------------------------------------------------
 
-(defcustom snippets-dir ""
+(defcustom my/snippets-dir "/Documents/Emacs-Stuff/Snippets/"
   "Directory containing yasnippet snippets."
-  :type 'directory
+  :type 'file
   :group 'autoinsert-setup)
 
-(defun set-snippets-dir (file)
-  "Set the directory containing yasnippet snippets."
-  (interactive "FSelect a path: ")
-  (if (not (file-exists-p file))
-      (find-file file))
-  (setq snippets-dir file)
-  (message "Yasnippets Directory set to: %s" snippets-dir))
+(defun my/set-snippet-dirs ()
+  "adds 'my/snippets-dir' to the list of directories containing yasnippet snippets.
+Calls this function inside of your configuration file."
+  (interactive)
+  (let ((dir (concat (getenv "HOME") my/snippets-dir)))
+    (message dir)
+    (add-to-list 'yas-snippet-dirs dir)))
 
 (defun my/autoinsert-yas-expand()
   "Replace text in yasnippet template."
@@ -81,15 +76,16 @@
 
 (use-package autoinsert
   :config
-  (auto-insert-mode 1)
-  (add-to-list 'auto-insert-alist
-               '(org-mode . my-org-template)))
+  (auto-insert-mode 1))
 
 (use-package yasnippet
   :ensure t
   :config
-  (add-to-list 'yas-snippet-dirs snippets-dir)
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+  (add-to-list 'auto-insert-alist
+	       '("\\.org\\'" . my-org-template)))
+
+(my/set-snippet-dirs)
 
 (provide 'autoinsert-setup)
 ;;; autoinsert-setup.el ends here
