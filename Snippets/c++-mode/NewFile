@@ -4,12 +4,10 @@
 # -- 
 /*
  * @file ${1:`(file-name-nondirectory (buffer-file-name))`}
- * @author `(idemacs/user-get-name)`
+ * @author `(user-full-name)`
  * @date `(format-time-string "%Y-%m-%d" (current-time))`
  * @details ${2:details}
  */
-
-#include <iostream>
 
 int main(int argc, char *argv[]){
     $0

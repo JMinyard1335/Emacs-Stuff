@@ -47,7 +47,10 @@
 	doom-modeline-time t
 	doom-modeline-time-icon t
 	doom-modeline-time-live-icon t
-	doom-modeline-buffer-encoding nil))
+	doom-modeline-buffer-encoding nil
+	doom-modeline-display-misc-in-all-mode-lines nil
+	doom-modeline-total-line-number t))
+
 ;; This is required to resize doom modeline so that it dosent block other buffers text.
 (advice-add #'fit-window-to-buffer :before (lambda (&rest _) (redisplay t)))
 (doom-modeline-mode)

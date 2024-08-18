@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: html Video
+# key: embVid
+# --
+#+begin_export html
+<div class="video-container">
+<video controls>
+<source src="${1:Link}" type="${2:format}"/>
+Your browser does not support the video tag.
+</video>
+</div>
+#+end_export

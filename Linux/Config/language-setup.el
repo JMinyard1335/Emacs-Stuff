@@ -27,14 +27,33 @@
 ;; - Java
 
 ;;; Code:
-(defun my/c-hook ()
-  "This functions was created to enable options for both c and c++ modes."
-  (setq c-default-style "k&r")
-  (setq c-ts-mode-set-style "k&r")
-  (setq c-basic-offset 4))
+(defun my-python-setup ()
+  "Controls the python configuraion including things like indentation."
+  (setq tab-width 4
+	python-indent-offset 4))
 
-(defun my/python-mode-hook ()
-  )
+(defun my-c++-setup ()
+  "Controls the c++ configuraion including things like indentation."
+  (setq
+   ;;c-default-style "k&r"
+   ;;c-basic-offset 4
+   ;; c-ts-mode-indent-offset 4
+   ;;c-ts-mode-indent-style "k&r"
+   ))
+
+(defun my-c-setup ()
+  "Controls the c configuraion including things like indentation."
+  (setq
+   c-default-style "k&r"
+   c-basic-offset 4
+   c-ts-mode-indent-offset 4
+   c-ts-mode-indent-style "k&r"))
+
+(defun my-java-setup ()
+  "Controls the java configuraion including things like indentation.")
+
+(defun my-elisp-setup ()
+  "Controls the elisp configuraion including things like indentation.")
 
 (use-package eglot
   :ensure t
@@ -60,11 +79,6 @@
   :ensure t
   :hook ((java-ts-mode . eglot-ensure))
   :mode (("\\.java\\'" . java-ts-mode)))
-
-(use-package css-ts-mode
-  :ensure t
-  :mode (("\\.css\\'" . css-ts-mode)))
-
 
 (provide 'language-setup)
 ;;; language-setup.el ends here

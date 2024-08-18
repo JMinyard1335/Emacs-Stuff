@@ -1,0 +1,129 @@
+# -*- mode: snippet -*-
+# name: cssNotes
+# key: Notes
+# --
+/*             NOTES AND DOCUMENTATION FOR LEARNING
+Specifity: in a css is like layers of importance.
+Elements like body and p are lower down the list then things like classes
+Even higher than classes are id elements but should rarely be used.
+You can also use !important to force an element to become the most important.
+
+Inheratience: is a thing in css, the body is the parent of all elements on the page.
+You can also put setting in the html element. this allows specific body settings to be applied.
+font and typeogrphy are usually inherited.
+certian things are not inherited tho such as borders. 
+also FORM ELEMENTS dont inhert things by default.
+
+Colors: There are a few ways to set colors
+1. Use the built in colors and name.
+2. use rgb(r,g,b) where r,g,b are the desired values
+3. use rgba this is rgb with an alpha channel to effect transparency.
+4. Hex #rrggbb where rr,gg,bb are the desired values.
+5. hsl hsl(hue,saturation,lightness.) also has an alpha channel if desired.
+
+Units: deermine the size of things on the page.
+Absolute Values:
+  1. px 1px = 1/96th of an inch this is the main absolute value that will be used.
+Variable Values:
+  1. precentages - always relitave to another quantity.
+     This quantity is what ever it is give but is often from the parent.
+  2. rem - Font size of the root element. 1rem is the default 2rem is twice the size.
+     This is useful because its always relatice to the browsers font size.
+  3. em - looks at the element itself, example body is set to 3rem,
+     you can use em to set things like padding relative to that.
+  4. ch - advance measure (width) of the glyph "0" of the font.
+     can be used to set the length of characters allowed in an element.
+  5. vw & vh - 1% ofeither the viewports width or height respectivly.     
+
+Box Models: can be thought of as nested boxes with margin being the outer most and the element being the inner most.
+the layers from inside out are: element, padding, border, margin.
+Certian values have a shorthand way of specifing top, right, bottom and left values
+margin: top right bottom left;
+padding: top right bottom left;
+outline is not apart of the box model but is styled like the border.
+the difference is it dosent take up space.
+
+Typography: changes the fonts and text
+1. text-deceoration - things like underline, overline, strike-through
+2. text-transform - things like captilize, lowercase...
+3. text-align - there to place the text in the element left, right, center, justify...
+4. text-indent - how much the first line gets indented in paragraphs.
+5. line-height - effects the space between lines.
+6. letter-spacing - changes the space size between the words.
+7. word-spacing - changes the space size between the words.
+8. font-size - changes the size of the font.
+9. font-weight - changes the thickness of the font.
+10. font-style - sets the itallics of the font.
+11. font-family - changes the font type.
+
+Links: is still text and can typograph can apply but links have some of there own
+links are anchor tag with href attribute. by default links are underlined.
+if not visited by default its blue if not visited purple if visited.
+the cursor changes when hovering happens and it has its own active attributes.
+links have something called psuedo classes like a button where the link can have different states.
+These states could be visited, active... you can set these by doing link:psuedo-class {}
+where psuedo-class is the state you want to customize. 
+
+Lists: change the styling of ordered and unordered list.
+1. list-style-type - can change the style of the bullets
+2. list-style-position - change the alignment of the bullets
+3. list-style-image - uses an image instead of the bullets
+the list-style: is shorthand and can take all the previous arguments.
+::marker can be used to modifiy the bullets.
+
+Display Types: block level elements vs inline level elements
+block level elements by default have 100% width of what they are given.
+inline elements can not have things like margin and height.
+padding can stil be applied but it will overlap other elements
+to keep the overlap from happing you can set displaty: inline-block.
+
+Floats: Used to float things to the left and the right.
+floats are not apart of the block flow of the page.
+when you float an element the other blocks will then attempt to wrap arround.
+to set margins between the float and the other blocks set them on the float element.
+When using floats inside of containers can cause issues to fix,
+it might become necessary to set the display of the container to:
+display:flow-root. in legacy code it could be overflow: auto.
+
+Columns: sets up columns on the page.
+when using columns you might want to set some of the following
+1. column-count: the amount of columns to create
+2. column-rule: Sets a border between the columns
+3. column-width: the size a column must be.
+4. column-gap: adds spacing between the columns.
+5. break-inside: avoid - set this to keep headings from flowing between columns.
+6. break-before: column - forces a column break be careful with this as resizing is weird.
+
+Position: how elements are related to others.
+some of the values for position are static, absolute, relative, fixed, sticky.
+absolute positioning needs a relative parent and if no ancestor is avaiable it takes the inital box.
+relative is always relative to its parent container.
+fixed is set such that it can not move even if you scroll the page.
+sticky will stay in its normal flow until it reaches a defined spot.
+so for sticky a block inside a contaier will stick where it is told till the container is out of scope.
+
+Flex Block: the flex box allows you to create a box that can hold multiple items.
+align-items and justify-content depend on the flex-direction. if the direction is row then
+align-items will be vertical and justify-content will be horizontal.
+1. display: flex; - sets the container to be a flex box.
+2. flex-direction: column; - sets the direction of the flex box.
+3. justify-content: center; - centers the items in the flex box. 
+4. align-items: center; - centers the items in the flex box. 
+5. gap: 1rem; - sets the space between the items in the flex box.
+6. flex-wrap: wrap; - allows the items to wrap to the next line. (handles overflow)
+7. flex-flow: row wrap; - sets the direction and wrap of the flex box. (shorthand)
+8. aligh-content: center; - centers the items in the flex box. (only works if there is extra space)
+9. flex-grow: 1; - allows the item to grow to fill the space.
+10. flex-shrink: 1; - allows the item to shrink to fit the space.
+11. flex-basis: 0; - sets the starting size of the item.
+
+Grid: the grid is a 2d layout system.
+with the grid-template-columns and grid-template-rows you can also use repeat(n, x)
+to repeat the same size for a number of times. this makes n rows of x size, x can be a pattern.
+1. display: grid; - sets the container to be a grid.
+2. grid-template-columns: 1fr 1fr 1fr; - sets the columns to be equal size.
+3. grid-template-rows: 1fr 1fr 1fr; - sets the rows to be equal size.
+4 row-gap & column-gap: 1rem; - sets the space between the rows and columns. (gap does both)
+5. grid-template-areas: can be used to define sections of the grid.
+6. grid-area: can be used to set the area of the grid associated with the element.
+*/
