@@ -36,7 +36,7 @@
   "Custom group for tools."
   :group nil)
 
-(defcustom my/merd-font-family "NFM"
+(defcustom my/nerd-font-family "NFM"
   "The font family to use for nerd icons."
   :type 'string
   :group 'my-tools)

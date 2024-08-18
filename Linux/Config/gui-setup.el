@@ -97,17 +97,6 @@
   :type 'boolean
   :group 'my-gui)
 
-(defcustom my-time nil
-  "Whether the time should be displayed or not."
-  :type 'boolean
-  :group 'my-gui)
-
-(defcustom my-battery nil
-  "Whether the battery should be displayed or not.
-This is only applicable to laptops."
-  :type 'boolean
-  :group 'my-gui)
-
 (defcustom my-startup-buffer nil
   "Whether the startup buffer should be displayed or not.
 This buffer is the one that emcas shows on default startup.
@@ -136,12 +125,6 @@ it contains things like a tutorial and some basic info."
 
 (defun my-set-misc-display ()
   "Set the display of the time, battery, startup buffer, menu bar, tool bar, scroll bar, line numbers, and tab line."
-  (if my-time
-      (display-time-mode 1)
-    (display-time-mode -1))
-  (if my-battery
-      (display-battery-mode 1)
-    (display-battery-mode -1))
   (if my-startup-buffer
       (setq inhibit-startup-screen nil)
     (setq inhibit-startup-screen t))

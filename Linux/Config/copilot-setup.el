@@ -24,6 +24,16 @@
 
 ;;; Code:
 
+(defcustom my-copilot-mode-list '()
+  "List of modes to enable copilot in."
+  :type 'list
+  :group 'my-tools)
+
+(defun my-copilot-hook ()
+  "Enables copilot for all modes in `'my-copilot-mode-list'."
+  (dolist (mode-hook my-copilot-mode-list)
+    (add-hook mode-hook (lambda () (copilot-mode 1)))))
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name

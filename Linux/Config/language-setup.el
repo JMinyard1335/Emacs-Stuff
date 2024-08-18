@@ -27,33 +27,28 @@
 ;; - Java
 
 ;;; Code:
+
+(defcustom my-eglot-ensure-list '()
+  "List of programing modes to enable eglot for."
+  :type 'list
+  :group 'my-tools)
+
+(defun my-eglot-ensure ()
+  "Ensures that eglot is enabled for the current buffer."
+  (dolist (mode my-eglot-ensure-list)
+    (add-hook mode (lambda () (eglot-ensure)))))
+
 (defun my-python-setup ()
   "Controls the python configuraion including things like indentation."
   (setq tab-width 4
 	python-indent-offset 4))
 
-(defun my-c++-setup ()
-  "Controls the c++ configuraion including things like indentation."
-  (setq
-   ;;c-default-style "k&r"
-   ;;c-basic-offset 4
-   ;; c-ts-mode-indent-offset 4
-   ;;c-ts-mode-indent-style "k&r"
-   ))
-
 (defun my-c-setup ()
   "Controls the c configuraion including things like indentation."
-  (setq
-   c-default-style "k&r"
-   c-basic-offset 4
-   c-ts-mode-indent-offset 4
-   c-ts-mode-indent-style "k&r"))
-
-(defun my-java-setup ()
-  "Controls the java configuraion including things like indentation.")
-
-(defun my-elisp-setup ()
-  "Controls the elisp configuraion including things like indentation.")
+  (setq c-default-style "k&r"
+	c-basic-offset 4
+	c-ts-mode-indent-offset 4
+	c-ts-mode-indent-style "k&r"))
 
 (use-package eglot
   :ensure t
@@ -64,7 +59,6 @@
 
 (use-package c-ts-mode
   :ensure t
-  :hook ((c-ts-mode . eglot-ensure))
   :mode (("\\.c\\'" . c-ts-mode)
 	 ("\\.h\\'" . c-ts-mode)
 	 ("\\.cpp\\'" . c-ts-mode)
@@ -72,12 +66,10 @@
 
 (use-package python
   :ensure t
-  :hook ((python-ts-mode . eglot-ensure))
   :mode (("\\.py\\'" . python-ts-mode)))
 
 (use-package java-ts-mode
   :ensure t
-  :hook ((java-ts-mode . eglot-ensure))
   :mode (("\\.java\\'" . java-ts-mode)))
 
 (provide 'language-setup)
