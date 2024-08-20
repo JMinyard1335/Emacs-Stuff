@@ -56,7 +56,7 @@
 
 ;;------------------------------------------------------------------------------------------------
 
-(defcustom my-snippets-dir "/Snippets/"
+(defcustom my-snippets-dir "~/Emacs-Stuff/Snippets/"
   "Directory containing yasnippet snippets."
   :type 'file
   :group 'autoinsert-setup)

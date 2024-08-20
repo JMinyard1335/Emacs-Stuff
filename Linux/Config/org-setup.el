@@ -131,13 +131,13 @@ If the user selects no, `nil' is inserted in its place."
 This function centers the text on the screen and enables line wrapping.
 It also makes sure any faces that need to be fixed width are set
 to fixed width."
-  (setq org-adapt-indentation t
-	visual-fill-column-width 150
-	visual-fill-column-center-text t)
-  (visual-line-fill-column-mode 1))
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (visual-line-mode 1))
 
 (defun my-org-faces ()
   "makes any faces that need to be fixed width fixed width."
+  (set-face-attribute 'fixed-pitch nil :font "VictorMonoNerdFontMono" :italic nil)
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
@@ -187,6 +187,15 @@ It also makes sure that all sub task are completed before a parent."
 (defun my-org-agenda ()
   "This function is in charge of the org-agenda settings."
   (setq org-agenda-window-setup 'current-window))
+
+(defun my-org-visual-fill ()
+  (setq visual-fill-column-width 140
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :ensure t
+  :hook (org-mode . my-org-visual-fill))
 
 (use-package doct
   :ensure t
@@ -267,8 +276,14 @@ It also makes sure that all sub task are completed before a parent."
   (setq inhibit-compacting-font-caches t)
   :hook
   (org-mode . my-org-visual-setup)
+  (org-mode . my-org-faces)
   :config
-  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+  (my-org-faces)
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+		 '("altacv" "\\documentclass[10pt,a4paper,ragged2e,withhyper]{altacv}"
+		   ("\\cvsection{%s}" . "\\cvsection*{%s}")))))
 
 (use-package olivetti 
   :ensure t
@@ -307,11 +322,11 @@ It also makes sure that all sub task are completed before a parent."
 ;; (use-package org-modern 
 ;;   :ensure t)
 
-;; (use-package org-bullets
-;;   :ensure t
-;;   :hook (org-mode . org-bullets-mode)
-;;   :custom
-;;   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+(use-package org-bullets
+  :ensure t
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 ;; ;; Used to center the text in org-mode.
 ;; ;; I only use this for the agenda.
@@ -323,165 +338,6 @@ It also makes sure that all sub task are completed before a parent."
 ;;   :ensure t
 ;;   :commands (doct))
 
-;; (use-package visual-fill-column
-;;   :ensure t
-;;   :hook (org-mode . my/org-mode-visual-fill))
-
-;; ;; Set up the Capture Templates ----------------------------------------------------------------------------
-;; ;; These capture templates can be added to the template list in `org-capture-templates'
-;; ;; Or they can be called by hotkeys bounded to (let) calls that call the `org-capture' function
-;; (defun idemacs/capture-school-template ()
-;;   "A list to hold the capture templates for school tasks."
-;;   '("School Work" :keys "s"
-;;     :file idemacs-school-path
-;;     :template
-;;     ("* %{todo-state} %{task} %{tags}:school:%^G"
-;;      "%{time-stamp}"
-;;      ":PROPERTIES:"   
-;;      ":Class: %^{class}"
-;;      ":Assigned: %U"
-;;      "%{link}"
-;;      ":END:")
-;;     :children
-;;     (("Assignment" :keys "a"
-;;      :headline "Assignments"
-;;      :todo-state "ASSIGNED"
-;;      :task "%^{Assignment}"
-;;      :time-stamp "DEADLINE: %(idemacs/agenda-set-deadline)"
-;;      :link ":Assignment: %(idemacs/agenda-link-file)"
-;;      :tags ":homework")
-;;      ("Lab" :keys "l"
-;;       :headline "Labs"
-;;       :todo-state "ASSIGNED"
-;;       :task "%^{Lab}"
-;;       :time-stamp "DEADLINE: %(idemacs/agenda-set-deadline)"
-;;       :link ":Lab: %(idemacs/agenda-link-file)"
-;;       :tags ":lab")
-;;      ("Exams" :keys "e"
-;;       :headline "Exams"
-;;       :todo-state ""
-;;       :task "%^{Exam}"
-;;       :time-stamp "DEADLINE: %(idemacs/agenda-set-deadline)"
-;;       :link ":Review: %(idemacs/agenda-link-file)"
-;;       :tags ":exam")
-;;      ("Class" :keys "c"
-;;       :headline "Classes"
-;;       :template
-;;       ("* TODO %^{Class} :school:class:"
-;;        "%(idemacs/agenda-set-class-time) %(idemacs/agenda-set-class-time)"
-;;        ":PROPERTIES:"
-;;        ":Course_Number: %^{Course Number}"
-;;        ":Section_Number: %^{Section Number}"
-;;        ":Instructor: %^{Instructor}"
-;;        ":Location: %^{Location}"
-;;        ":Class_Directory: %(idemacs/agenda-link-file)"
-;;        ":END:")))))
-
-;; (defun idemacs/capture-project-template ()
-;;  "A list to hold the capture templates for projects."
-;;   '("Projects" :keys "p"
-;;     :template
-;;     ("* %{todo-state} %^{Task} %{tags}:project:%^G"
-;;      "%{time-stamp}"
-;;      ":PROPERTIES:"
-;;      ":Description: %?"
-;;      "%{created}"
-;;      "%{link}"
-;;      "%{project}"
-;;      ":END:")
-;;     :children
-;;     (("School Projects" :keys "s"
-;;       :file idemacs-school-path
-;;       :todo-state "ASSIGNED"
-;;       :tags ":school"
-;;       :time-stamp "DEADLINE: %(idemacs/agenda-set-deadline)"
-;;       :created ":Assigned: %U"
-;;       :children
-;;       (("Project" :keys "p"
-;; 	:headline "Projects"
-;; 	:link ":Project: %(idemacs/agenda-link-file)"
-;; 	:project "%^{What is the name of the project?}")
-;;        ("Sub Task" :keys "t"
-;; 	:function idemacs/agenda-school-project-capture
-;; 	:link ":Task: %(idemacs/agenda-link-file)"
-;; 	:project "%^{What is the name of the project? }")))
-;;      ("Personal Projects" :keys "p"
-;;       :file idemacs-personal-path
-;;       :todo-state "TODO"
-;;       :tags ":personal"
-;;       :time-stamp "DEADLINE: %(idemacs/agenda-set-deadline)"
-;;       :created ":Created: %U"
-;;       :children
-;;       (("Project" :keys "p"
-;; 	:headline "Projects"
-;; 	:link ":Personal_Docs: %(idemacs/agenda-link-file)"
-;; 	:project ":Project: %^{What is the name of the project?}")
-;;        ("Sub Task" :keys "t"
-;; 	:function idemacs/agenda-personal-project-capture
-;; 	:link ":Task: %(idemacs/agenda-link-file)"
-;; 	:project ":Project: %^{What is the name of the project? }")))
-;;      ("Home Projects" :keys "h"
-;;       :file idemacs-home-path
-;;       :todo-state "TODO"
-;;       :tags ":home"
-;;       :time-stamp "%(idemacs/agenda-set-deadline)"
-;;       :created ":Created: %U"
-;;       :children
-;;       (("Project" :keys "p"
-;; 	:headline "Projects"
-;; 	:link ":Home_Docs: %(idemacs/agenda-link-file)"
-;; 	:project ":Project: %^{What is the name of the project?}")
-;;        ("Sub Task" :keys "t"
-;; 	:function idemacs/agenda-home-project-capture
-;; 	:link ":Task: %(idemacs/agenda-link-file"
-;; 	:project ":Project: %^{What is the name of the project? "))))))
-
-;; (defun idemacs/capture-home-template ()
-;;  "A list to hold the capture templates for home tasks."
-;;   '("Home" :keys "h"
-;;     :file idemacs-home-path
-;;     :template
-;;     ("* TODO %^{Task} %{tags}%^g"
-;;      "SCHEDULED: %(idemacs/agenda-set-deadline)"
-;;      ":PROPERTIES:"
-;;      ":DATE: %U"
-;;      ":END:")
-;;     :children
-;;     (("Chores" :keys "c"
-;;       :headline "Chores"
-;;       :tags ":home:errand:"
-;;       )
-;;      ("Errands" :keys "e"
-;;       :headline "Errands"
-;;       :tags ":home:errand:"))))
-
-;; (defun idemacs/capture-personal-template ()
-;;   "A list to hold the capture templates for personal tasks."
-;;   '("Personal" :keys "i"
-;;     :file idemacs-personal-path
-;;     :children
-;;     (("Reminders" :keys "r"
-;;       :headline "Reminders"
-;;       :template
-;;       ("* TODO %^{Reminder} :personal:reminders:%^g"
-;;        "DEADLINE: %(idemacs/agenda-set-deadline)"))
-;;      ("Goals" :keys "g"
-;;       :headline "Goals"
-;;       :template
-;;       ("* %^{Goal} :personal:goals:%^g"
-;;        "%?"
-;;        ":PROPERTIES:"
-;;        ":DATE: %U"
-;;        ":REASON: %^{Why is this a goal?}"
-;;        ":END:"))
-;;      ("Family" :keys "f"
-;;       :headline "Family"
-;;       :template
-;;       ("* TODO %^{Activity} :personal:family:%^g"
-;;        ":PROPERTIES:"
-;;        ":DATE: %(idemacs/agenda-set-deadline)"
-;;        ":LOCATION: %^{Location}"
-;;        ":END:")))))
 
 (provide 'org-setup)
 ;;; org-setup.el ends here
