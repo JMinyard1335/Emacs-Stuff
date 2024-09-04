@@ -14,6 +14,11 @@
 
 * Introduction 
 Welcome to my Emacs configuration! This reapo is a collection of different modifications I have made to my Emacs configuration. I have been broken these configurations in to easy to customize modules that can be used independently of each other.
+1. [[][]]
+2. [[][]]
+3. [[][]]
+4. [[][]]
+5. [[][]]
 
 * Installation
 To install this reapo run the command below in a directory of your choice I tend to stick it in my home dir 
@@ -272,11 +277,102 @@ Unlike the other modules this one requires little to no setup. Simply set the pa
 When setting the path: The function will *concat the path with $HOME*. keep this in mind when setting up the location to store these variables. If you use the path provided above and your Emacs-stuff dir is located in $HOME/Emacs-Stuff then you can leave the path as is and will find some snippets ready to use.
    
 ** Language Setup
+This is where most of the coding features come in. This module takes advantage of the built in tree-sitter and eglot functions of emacs 29. Currently the functionality of the module is limited to simply providing a list of modes you wish to enable eglot in. In the future I would like to extend the functionality to allow for the modification of things like formatting of different languages.
+
+#+begin_src
+  (use-package language-setup
+  :config
+  (setq my-eglot-ensure-list
+	'(c++-mode-hook
+	  c++-ts-mode-hook
+	  c-mode-hook
+	  c-ts-mode-hook
+	  java-mode-hook
+	  java-ts-mode-hook
+	  python-mode-hook
+	  python-ts-mode-hook))
+  (my-eglot-ensure))
+#+end_src
+
+As you can see simply add the language you want to the list and eglot will attempt to run the language server for that language. If you do not have the language server installed then you will need to install it before this will work. Also you will need to install the tree-sitter-grammars for the languages you want to use. This can be done by running the command \newline
+*M-x: treesit-install-language-grammar*
+and then entering the name of the language you want and following the instructions in the mini-buffer
 
 ** Tools Setup
+The tools module is probably going to be one of the most useful and largest modules in the configuration. This module is responsible for setting up all of the minor modes that are used in the configuration. This includes things like company-mode, electric-pair-mode, rainbow-mode, flyspell-mode, and hs-minor-mode. Any additional general use tools will be set up in this module for the user to take advantage of.
+
+#+begin_src emacs-lisp
+  (use-package tools-setup
+    :config
+    (setq my-company-mode-list '(prog-mode-hook)
+          my-electric-pair-mode-list '(prog-mode-hook)
+          my-rainbow-mode-list '(prog-mode-hook org-mode-hook)
+          my-flyspell-mode-list '(text-mode-hook org-mode-hook)
+          my-hs-mode-list '(prog-mode-hook janet-mode-hook))
+    (my-tool-hook-setup))  
+#+end_src
+
+Setting up this module is similar to that of the languages where you simply provide a a list of the desired mode-hooks you wish to activate the tool in.
 
 ** Ligature Setup
+Ligatures is in its bare minimum state at the moment that means it is all or nothing. Eventually I want to implement a way to create custom groups of ligatures that can be set to different modes or toggled between. This is due to some programming languages not playing kindly with ligatures. For now this is a simple on or off switch.
+
+#+begin_src emacs-lisp
+  (use-package ligatures-setup)
+#+end_src
+
+Simply include or comment out this line to enable or disable ligatures in your configuration.
 
 ** Copilot Setup
+This is a package for Githubs copilot integration with Emacs. This package is much like the previous ones where all you need to do is supply a list of the modes you want to enable copilot in, And assuming that you have copilot and are logged in it will work. To login and install the server use the following commands
+- M-x: copilot-install-server
+- M-x: copilot-login
+and follow any instructions in the mini-buffer. This will most likely take you to the github website so have access to the internet and a web browser. If you do not want copilot then do not add this module to your configuration.
 
+#+begin_src emacs-lisp
+  (use-package copilot-setup
+    :config
+    (setq my-copilot-mode-list
+          '(prog-mode-hook
+            org-mode-hook))
+    (my-copilot-hook))
+#+end_src
+
+And thats it enjoy the copilot integration.
 ** Org Setup
+This module is the most complicated in terms of how to handle with customization. As org-mode is definitely better with a personalized setup. Things like capture templates and agenda views are hard to set up to be useful for everyone and are better left to the user to set up. That being said you can use my custom functions to set up your org-mode configuration. or delve into the org-mode-setup.el file and set up your own configuration.
+
+#+begin_src emacs-lisp
+  (use-package org-setup
+    :config
+    (my-org-faces)
+    (setq org-directory "~/Emacs-Stuff/Org/")
+    (my-org-agenda-files '("school.org" "journal.org" "todo.org"))
+    (setq org-capture-templates (doct (list (my-school-capture))))
+    (my-org-agenda)
+    (my-org-tags)
+    (my-org-logging)
+    (my-org-todo))
+#+end_src
+
+When setting up org mode you need to specify the directory in which the agenda and templates can look for org files. this can be done with the
+#+begin_src emacs-lisp
+  (setq org-directory "/Path/To/Dir")
+#+end_src
+
+You can also specify certain files as the agenda files separately from the org-directory. This can be done with the following function
+#+begin_src emacs-lisp
+  (my-org-agenda-files '("file1.org" "file2.org"))
+#+end_src
+
+and finally the capture templates. This a doct list of capture functions that are in the org-setup.el file. You can add your own capture templates by adding a new function to the org-setup.el file and then adding it to the list of capture templates in the org-setup module. This can be done with the following function
+#+begin_src emacs-lisp
+  (setq org-capture-templates (doct
+                               (list
+                                (my-school-capture
+                                 additional-capture
+                                 ...
+                                 ...))))
+  #+end_src
+
+  

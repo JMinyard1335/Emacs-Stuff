@@ -136,7 +136,7 @@
 
 (use-package neotree
   :ensure t
-  :keys :map (global-set-key [f8] 'neotree-toggle)
+  :bind ([f8] . 'neotree-toggle)
   :config
   (setq neo-theme 'icons)
   (setq neo-window-width 30))
