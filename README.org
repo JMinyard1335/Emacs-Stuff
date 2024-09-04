@@ -30,6 +30,7 @@ For SSH
 Once you have cloned the repository you can copy init file from the directory named after your operating system of choice to your ~/.emacs.d/  or simply follow along with the instructions in the setup section of the readme
 * Setup
 By the end of the setup your init file should look something along the lines of the following:
+
 #+begin_src emacs-lisp
   (require 'package)
   (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -148,9 +149,11 @@ By the end of the setup your init file should look something along the lines of 
             (lambda ()
               (define-key org-mode-map (kbd "C-c i") 'org-insert-todo-heading)))
 #+end_src
+
 I know this seems like a lot but lets go through each part and figure out what you need/want to include in the init file.
 ** Package Setup
 This is the first part of the init file and is responsible for setting up the package manager and the package archives. This is a necessary part of the init file and should be included in all configurations.
+
 #+begin_src emacs-lisp
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -159,18 +162,24 @@ This is the first part of the init file and is responsible for setting up the pa
 
 (package-initialize)
 #+end_src
+
 After this is another required part of the configuration, and that is telling the init file where to find all of the Emacs-stuff modules. To do this edit the following lines with the appropriate paths to  the Themes directory and the OS(Windows, Linux) config of choice.
+
 #+begin_src emacs-lisp
 (add-to-list 'custom-theme-load-path "/Path/To/Themes")
 (add-to-list 'load-path "/Path/To/Config")
 #+end_src
+
 There are just a few more things before we get into the fun part.  Since Emacs 29 there have been alot of warnings from different packages that have been annoying me so I have set the warning level to emergency. This can be changed to your liking.
   * THIS IS BAD PRACTICE AS IT HIDES ALL WARNINGS
+
 #+begin_src emacs-lisp
-(setq warning-minimum-level :emergency)
+  (setq warning-minimum-level :emergency)
 #+end_src
+
 ** GUI Set Up
 We have now arrived to one of the most important parts of any good configuration, how it looks! if your config looks bad I will probably assume it is bad. All jokes aside this module allows you to set various aspects of the gui's appearance without having to dig through loads of customization pages. Below is the code for all the options available to set in the gui-setup module.
+
 #+begin_src emacs-lisp
 (use-package gui-setup
   :config
@@ -191,6 +200,7 @@ We have now arrived to one of the most important parts of any good configuration
 	)
   (setup-gui))
 #+end_src
+
 Below is additional information of each of the variables above
 *** my-font-name
 This variable is used to set the font of the gui. Do not set this to "VictorMonoNerdFont" Unless it is installed on your system. Instead Pick one of the system fonts.
@@ -220,9 +230,47 @@ Turns on and off the tabline. The tabline is similar to the tabs found in a web 
 Turns on and off the startup buffer. This is the buffer that opens when you first open emacs, It contains useful info like a tutorial so if you are new check that out. if you turn this off then by default the scratch buffer will open on start up.
 
 ** Modeline Setup
+The modeline is the bar at the bottom of the window. It contains a plethora of information about the mode/minor-modes time, rows, cols, linenumber, time, battery, gitstatus and much more. The modeline is your best friend for a quick glimpse of the file you are in overall.
+
+#+begin_src emacs-lisp
+  (use-package modeline-setup
+    :config
+    (setq my-modeline-height 40
+          my-modeline-bar-width 8
+          my-modeline-time t
+          my-modeline-battery t
+          my-modeline-display-buffer t
+          my-modeline-content-info t)
+    (my-modeline-setup))
+#+end_src
+
+The variables here set multiple values at once as the modeline and doom-mode line which was used for the visual aesthetic have many variables which that need to be set in tandem.
+*** my-modeline-height
+Determines the height of the modeline...duh, The should scale all items in the bar as well. be ware that a modeline that is to large is more annoying than helpful.
+*** my-modeline-bar-width
+Determines the width of the bar on the left side of the modeline. This is a weird one and I am not even sure why there is a bar there. It looks kinda cool ig and I believe there is a  way to change the color? tho I haven't implemented it.
+*** my-modeline-time
+Determines if the time is displayed in the modeline. This is useful for keeping track of time while working. I know for a fact Ill put emacs in full screen and forget to ever check the time so this can minimize my stupidity and how often I miss meetings.
+*** my-modeline-battery
+Determines if the battery is displayed in the modeline. This is useful for keeping track of battery life on a laptop. It will change color depending on the percent of the battery left and whether or not it is charging. *Turn off if on a desktop* as this will cause an error to be thrown.
+*** my-modeline-display-buffer
+Determines if the buffer name is displayed in the modeline. This is useful for keeping track of what file you are in. This is a must have for me as I tend to have multiple files open at once and need to know which one I am in.
+*** my-modeline-content-info
+If t Displays info like the current row and column number, the total number of lines in the buffer, and the percentage of the buffer that is visible. This is useful for keeping track of where you are in the file and how much you have left to go.
 
 ** Auto Insert Setup
+Auto insert is a package that allows you to insert snippets of code or text into a buffer with a simple keywords. It also allows for the insertion of boiler plate content into new files. This is useful for keeping a consistent format across all of your files (especially org docs).
 
+#+begin_src emacs-lisp
+  (use-package autoinsert-setup
+    :config
+    (my-set-snippet-dirs "/Emacs-Stuff/Snippets")
+    (yas-reload-all))
+#+end_src
+
+Unlike the other modules this one requires little to no setup. Simply set the path to the directory containing the snippets you want to use and run the command yas-reload-all. This will load all the snippets into the auto insert package and make them available for use.
+When setting the path: The function will *concat the path with $HOME*. keep this in mind when setting up the location to store these variables. If you use the path provided above and your Emacs-stuff dir is located in $HOME/Emacs-Stuff then you can leave the path as is and will find some snippets ready to use.
+   
 ** Language Setup
 
 ** Tools Setup
