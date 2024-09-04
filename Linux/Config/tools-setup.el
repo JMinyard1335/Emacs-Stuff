@@ -134,5 +134,12 @@
   (setq nerd-icons-font-family my/merd-font-family)
   (setq nerd-icons-color-icons t))
 
+(use-package neotree
+  :ensure t
+  :keys :map (global-set-key [f8] 'neotree-toggle)
+  :config
+  (setq neo-theme 'icons)
+  (setq neo-window-width 30))
+
 (provide 'tools-setup)
 ;;; tools-setup.el ends here

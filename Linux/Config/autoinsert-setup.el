@@ -56,7 +56,7 @@
 
 ;;------------------------------------------------------------------------------------------------
 
-(defcustom my-snippets-dir "~/Emacs-Stuff/Snippets/"
+(defcustom my-snippets-dir "/Emacs-Stuff/Snippets/"
   "Directory containing yasnippet snippets."
   :type 'file
   :group 'autoinsert-setup)
@@ -68,7 +68,8 @@
       (let ((dir (concat (getenv "HOME") directory)))
 	(message dir)
 	(add-to-list 'yas-snippet-dirs dir))
-    (add-to-list 'yas-snippet-dirs (concat (getenv "HOME") my-snippets-dir))))
+    (add-to-list 'yas-snippet-dirs (concat (getenv "HOME") my-snippets-dir))
+    (message (concat (getenv "HOME") my-snippets-dir))))
 
 (defun my/autoinsert-yas-expand()
   "Replace text in yasnippet template."

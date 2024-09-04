@@ -1,0 +1,33 @@
+#+TITLE: Emacs-Stuff
+#+AUTHOR: Jachin Minyard
+:PROPERTIES:
+#+LATEX_CLASS: article
+#+STARTUP: overview
+#+OPTIONS: toc:nil
+#+OPTIONS: todo:nil
+#+OPTIONS: H:6
+#+OPTIONS: num:1
+#+LATEX_HEADER: \usepackage[margin=.75in]{geometry}
+#+LATEX_HEADER_EXTRA: \usepackage{tikz}
+#+LATEX_HEADER_EXTRA: \usepackage{graphicx}
+:END:
+
+* Introduction 
+Welcome to my Emacs configuration! This reapo is a collection of different modifications I have made to my Emacs configuration. I have been broken these configurations in to easy to customize modules that can be used independently of each other.
+
+* Installation
+To install this reapo run the command below in a directory of your choice I tend to stick it in my home dir
+For HTTPS:
+#+begin_src bash
+  git clone https://github.com/JMinyard1335/Emacs-Stuff.git
+#+end_src
+For SSH
+#+begin_src bash
+  git clone git@github.com:JMinyard1335/Emacs-Stuff.git
+#+end_src
+
+Once you have cloned the repository you can copy init file from the directory named after your operating system of choice to your ~/.emacs.d/  or simply follow along with the instructions in the setup section of the readme
+* Setup
+
+* 
+

@@ -72,5 +72,15 @@
   :ensure t
   :mode (("\\.java\\'" . java-ts-mode)))
 
+(use-package janet-mode
+  :ensure t)
+
+(straight-use-package
+ '(ijanet
+   :type git
+   :host github
+   :repo "serialdev/ijanet-mode"
+))
+
 (provide 'language-setup)
 ;;; language-setup.el ends here

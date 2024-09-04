@@ -189,7 +189,7 @@ It also makes sure that all sub task are completed before a parent."
   (setq org-agenda-window-setup 'current-window))
 
 (defun my-org-visual-fill ()
-  (setq visual-fill-column-width 140
+  (setq visual-fill-column-width 120
         visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
@@ -276,7 +276,7 @@ It also makes sure that all sub task are completed before a parent."
   (setq inhibit-compacting-font-caches t)
   :hook
   (org-mode . my-org-visual-setup)
-  (org-mode . my-org-faces)
+  (org-mode. my-org-faces)
   :config
   (my-org-faces)
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
