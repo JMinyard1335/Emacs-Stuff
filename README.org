@@ -16,7 +16,8 @@
 Welcome to my Emacs configuration! This reapo is a collection of different modifications I have made to my Emacs configuration. I have been broken these configurations in to easy to customize modules that can be used independently of each other.
 
 * Installation
-To install this reapo run the command below in a directory of your choice I tend to stick it in my home dir
+To install this reapo run the command below in a directory of your choice I tend to stick it in my home dir 
+
 For HTTPS:
 #+begin_src bash
   git clone https://github.com/JMinyard1335/Emacs-Stuff.git
