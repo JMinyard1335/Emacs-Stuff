@@ -13,7 +13,6 @@
 :END:
 
 * Introduction 
-CLOSED: [2024-09-04 Wed 08:17]
 Welcome to my Emacs configuration! This reapo is a collection of different modifications I have made to my Emacs configuration. I have been broken these configurations in to easy to customize modules that can be used independently of each other.
 
 * Installation
