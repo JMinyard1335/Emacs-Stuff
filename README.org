@@ -14,11 +14,19 @@
 
 * Introduction 
 Welcome to my Emacs configuration! This reapo is a collection of different modifications I have made to my Emacs configuration. I have been broken these configurations in to easy to customize modules that can be used independently of each other.
-1. [[][]]
-2. [[][]]
-3. [[][]]
-4. [[][]]
-5. [[][]]
+1) [[*Installation][Installation]]
+2) [[*Setup][Setup]]
+   - [[*Package Setup][Package Setup]]
+   - [[*GUI Setup][GUI Setup]]
+   - [[*Modeline Setup][Modeline Setup]]
+   - [[*Auto Insert Setup][Auto Insert Setup]]
+   - [[*Language Setup][Language Setup]]
+   - [[*Tools Setup][Tools Setup]]
+   - [[*Ligature Setup][Ligature Setup]]
+   - [[*Copilot Setup][Copilot Setup]]
+   - [[*Org Setup][Org Setup]]
+   - [[*Keybinds][Keybinds]]
+3) [[*Change Log][Change Log]]
 
 * Installation
 To install this reapo run the command below in a directory of your choice I tend to stick it in my home dir 
@@ -182,7 +190,7 @@ There are just a few more things before we get into the fun part.  Since Emacs 2
   (setq warning-minimum-level :emergency)
 #+end_src
 
-** GUI Set Up
+** GUI Setup
 We have now arrived to one of the most important parts of any good configuration, how it looks! if your config looks bad I will probably assume it is bad. All jokes aside this module allows you to set various aspects of the gui's appearance without having to dig through loads of customization pages. Below is the code for all the options available to set in the gui-setup module.
 
 #+begin_src emacs-lisp
@@ -374,5 +382,42 @@ and finally the capture templates. This a doct list of capture functions that ar
                                  ...
                                  ...))))
   #+end_src
+** Keybinds
+This is something that is completely user dependent so instead of hiding the keybinds i prefer in the modules internal I call simple hooks from the init file like so:
 
-  
+#+begin_src emacs-lisp
+  (add-hook 'hs-minor-mode-hook
+            (lambda ()
+              (define-key hs-minor-mode-map (kbd "C-;") 'hs-hide-block)
+              (define-key hs-minor-mode-map (kbd "C-'") 'hs-show-block)
+              (define-key hs-minor-mode-map (kbd "C-:") 'hs-hide-all)
+              (define-key hs-minor-mode-map (kbd "C-\"") 'hs-show-all)))
+
+  (add-hook 'flyspell-mode-hook
+            (lambda ()
+              (define-key flyspell-mode-map (kbd "C-s c") 'flyspell-correct-word-before-point)
+              (define-key flyspell-mode-map (kbd "C-s b") 'flyspell-buffer)
+              (define-key flyspell-mode-map (kbd "C-s a") 'ispell-buffer)))
+
+  (add-hook 'company-mode-hook
+            (lambda ()
+              (define-key company-active-map (kbd "C-n") 'company-select-next)
+              (define-key company-active-map (kbd "C-p") 'company-select-previous)
+              (define-key company-active-map (kbd "C-g") 'company-abort)))
+
+  (add-hook 'copilot-mode-hook
+            (lambda ()
+              (define-key copilot-mode-map (kbd "C-<return>") 'copilot-complete)
+              (define-key copilot-mode-map (kbd "C-s-<right>") 'copilot-accept-completion-by-word)
+              (define-key copilot-mode-map (kbd "C-s-<down>") 'copilot-accept-completion-by-line)
+              (define-key copilot-mode-map (kbd "C-c n") 'copilot-next-completion)
+              (define-key copilot-mode-map (kbd "C-c p") 'copilot-previous-completion)))
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (define-key org-mode-map (kbd "C-c i") 'org-insert-todo-heading)))
+#+end_src
+
+These are some of the more common key binds feel free to put these in your config and customize the bindings. Note that the keybinds are set in the hooks for the modes so that they only apply when the mode is active. This is to prevent conflicts with other modes that may use the same keybinds. This is not perfect and you still need to worry about overriding the packages keybinds but it is a good start.
+
+*  Change Log
