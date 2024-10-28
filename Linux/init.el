@@ -43,7 +43,8 @@
 	  java-mode-hook
 	  java-ts-mode-hook
 	  python-mode-hook
-	  python-ts-mode-hook))
+	  python-ts-mode-hook
+	  rust-mode-hook))
   (my-eglot-ensure))
 
 (use-package tools-setup

@@ -141,5 +141,19 @@
   (setq neo-theme 'icons)
   (setq neo-window-width 30))
 
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(use-package flycheck-janet
+  :straight (:type git
+             :host github
+             :repo "sogaiu/flycheck-janet"
+             :files ("*.el")))
+
+(use-package all-the-icons
+  :ensure t)
+
 (provide 'tools-setup)
 ;;; tools-setup.el ends here

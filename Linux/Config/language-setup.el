@@ -68,12 +68,33 @@
   :ensure t
   :mode (("\\.py\\'" . python-ts-mode)))
 
+(use-package python-ts-mode
+  :ensure t
+  :mode (("\\.py\\'" . python-ts-mode)))
+
 (use-package java-ts-mode
   :ensure t
   :mode (("\\.java\\'" . java-ts-mode)))
 
 (use-package janet-mode
   :ensure t)
+
+(use-package rust-mode
+  :ensure t
+  :init (setq rust-mode-treesitter-derive t))
+
+(use-package rust-ts-mode
+  :ensure t
+  :mode (("\\.rs\\'" . rust-ts-mode)))
+
+(use-package rustic
+  :ensure t
+  :after (rust-mode)
+  :config
+  (setq rustic-format-on-save nil)
+  (setq rustic-lsp-client 'eglot)
+  :custom
+  (rustic-cargo-use-last-stored-arguments t))
 
 (straight-use-package
  '(ijanet
