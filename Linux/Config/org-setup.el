@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2024  
 
-;; Author:  <jachi@DEVTABLET>
+;; Author:  <jachi@Codehub>
 ;; Keywords: 
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -131,7 +131,7 @@ If the user selects no, `nil' is inserted in its place."
 This function centers the text on the screen and enables line wrapping.
 It also makes sure any faces that need to be fixed width are set
 to fixed width."
-  (org-indent-mode)
+  ;(org-indent-mode)
   (variable-pitch-mode 1)
   (visual-line-mode 1))
 
@@ -140,7 +140,7 @@ to fixed width."
   (set-face-attribute 'fixed-pitch nil :font "VictorMonoNerdFontMono" :italic nil)
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+  ;(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
@@ -193,90 +193,90 @@ It also makes sure that all sub task are completed before a parent."
         visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
-(use-package visual-fill-column
-  :ensure t
-  :hook (org-mode . my-org-visual-fill))
+;; (use-package visual-fill-column
+;;   :ensure t
+;;   :hook (org-mode . my-org-visual-fill))
 
-(use-package doct
-  :ensure t
-  :commands (doct))
+;; (use-package doct
+;;   :ensure t
+;;   :commands (doct))
 
-(defun my-school-capture ()
-  "This function holds the template for the school capture."
-  '("School" :keys "s"
-    :file (lambda () (concat org-directory "school.org"))
-    :template
-    ("* %{todo-state} %^{task} %{tags}"
-     "%{time-stamp}"
-     ":Logbook:"
-     ":Class: %^{class}"
-     ":Assigned: %U"
-     ":link: %(my-agenda-link-file)"
-     ":END:")
-    :children (("Assignment" :keys "a"
-		:todo-state "TODO"
-		:tags ":assignment:"
-		:time-stamp ":DEADLINE: %(my-agenda-set-deadline)")
-	       ("Labs" :keys "l"
-		:todo-state "TODO"
-		:tags ":lab:"
-		:time-stamp ":SCHEDULED: %(my-agenda-set-deadline)")
-	       ("Exam" :keys "e"
-		:todo-state "TODO"
-		:tags ":exam:"
-		:time-stamp ":SCHEDULED: %(my-agenda-set-deadline)"))))
+;; (defun my-school-capture ()
+;;   "This function holds the template for the school capture."
+;;   '("School" :keys "s"
+;;     :file (lambda () (concat org-directory "school.org"))
+;;     :template
+;;     ("* %{todo-state} %^{task} %{tags}"
+;;      "%{time-stamp}"
+;;      ":Logbook:"
+;;      ":Class: %^{class}"
+;;      ":Assigned: %U"
+;;      ":link: %(my-agenda-link-file)"
+;;      ":END:")
+;;     :children (("Assignment" :keys "a"
+;; 		:todo-state "TODO"
+;; 		:tags ":assignment:"
+;; 		:time-stamp ":DEADLINE: %(my-agenda-set-deadline)")
+;; 	       ("Labs" :keys "l"
+;; 		:todo-state "TODO"
+;; 		:tags ":lab:"
+;; 		:time-stamp ":SCHEDULED: %(my-agenda-set-deadline)")
+;; 	       ("Exam" :keys "e"
+;; 		:todo-state "TODO"
+;; 		:tags ":exam:"
+;; 		:time-stamp ":SCHEDULED: %(my-agenda-set-deadline)"))))
 
-(defun my-school-agenda ()
-  "This function defines an agenda view for school tasks."
-  '("s" "School Agenda"
-    ((agenda
-      ""
-      ((org-agenda-span 'day)
-       (org-todo-keywords
-	'((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
-       (org-todo-keywords-for-agenda '("TODO(t)" "WAITING(w)"))
-       (org-done-keywords-for-agenda '("DONE(d)" "CANCELED(c)"))
-       (org-agenda-time-grid nil)
-       (org-agenda-overriding-header "School Agenda")
-       (org-agenda-prefix-format '((agenda . "  %i %s %t ")))
-       (org-agenda-hide-tags-regexp ".*")
-       (org-super-agenda-unmatched-name "Misc")
-       (org-super-agenda-groups
-	'((:name "Overdue"
-		 :deadline past
-		 :order 0)
-	  (:name "Today"
-		 :deadline today
-		 :order 1)
-	  (:name "Assignments"
-		 :tag "assignment"
-		 :order 2)
-	  (:name "Labs"
-		 :tag "lab"
-		 :order 2)
-	  (:name "Projects"
-		 :tag "project"
-		 :order 2)
-	  (:name "Exams"
-		 :tag "exam"
-		 :order 2))))))))
+;; (defun my-school-agenda ()
+;;   "This function defines an agenda view for school tasks."
+;;   '("s" "School Agenda"
+;;     ((agenda
+;;       ""
+;;       ((org-agenda-span 'day)
+;;        (org-todo-keywords
+;; 	'((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
+;;        (org-todo-keywords-for-agenda '("TODO(t)" "WAITING(w)"))
+;;        (org-done-keywords-for-agenda '("DONE(d)" "CANCELED(c)"))
+;;        (org-agenda-time-grid nil)
+;;        (org-agenda-overriding-header "School Agenda")
+;;        (org-agenda-prefix-format '((agenda . "  %i %s %t ")))
+;;        (org-agenda-hide-tags-regexp ".*")
+;;        (org-super-agenda-unmatched-name "Misc")
+;;        (org-super-agenda-groups
+;; 	'((:name "Overdue"
+;; 		 :deadline past
+;; 		 :order 0)
+;; 	  (:name "Today"
+;; 		 :deadline today
+;; 		 :order 1)
+;; 	  (:name "Assignments"
+;; 		 :tag "assignment"
+;; 		 :order 2)
+;; 	  (:name "Labs"
+;; 		 :tag "lab"
+;; 		 :order 2)
+;; 	  (:name "Projects"
+;; 		 :tag "project"
+;; 		 :order 2)
+;; 	  (:name "Exams"
+;; 		 :tag "exam"
+;; 		 :order 2))))))))
 
-(use-package org-modern
-  :ensure t)
+;; (use-package org-modern
+;;   :ensure t)
 
-(use-package org-super-agenda
-  :ensure t
-  :hook
-  (org-agenda-mode . org-super-agenda-mode)
-  :config
-  (setq org-super-agenda-hide-empty-groups nil))
+;; (use-package org-super-agenda
+;;   :ensure t
+;;   :hook
+;;   (org-agenda-mode . org-super-agenda-mode)
+;;   :config
+;;   (setq org-super-agenda-hide-empty-groups nil))
 
 (use-package org
   :init
   (setq inhibit-compacting-font-caches t)
   :hook
   (org-mode . my-org-visual-setup)
-  (org-mode. my-org-faces)
+  (org-mode . my-org-faces)
   :config
   (my-org-faces)
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
@@ -285,12 +285,12 @@ It also makes sure that all sub task are completed before a parent."
 		 '("altacv" "\\documentclass[10pt,a4paper,ragged2e,withhyper]{altacv}"
 		   ("\\cvsection{%s}" . "\\cvsection*{%s}")))))
 
-(use-package olivetti 
-  :ensure t
-  :hook
-  (org-agenda-mode . olivetti-mode)
-  :config
-  (setq olivetti-style 'fancy))
+;; (use-package olivetti 
+;;   :ensure t
+;;   :hook
+;;   (org-agenda-mode . olivetti-mode)
+;;   :config
+;;   (setq olivetti-style 'fancy))
 
 ;; ;; The main org-mode package.
 ;; (use-package org
@@ -322,15 +322,11 @@ It also makes sure that all sub task are completed before a parent."
 ;; (use-package org-modern 
 ;;   :ensure t)
 
-(use-package org-bullets
-  :ensure t
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-;; ;; Used to center the text in org-mode.
-;; ;; I only use this for the agenda.
-
+;; (use-package org-bullets
+;;   :ensure t
+;;   :hook (org-mode . org-bullets-mode)
+;;   :custom
+;;   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 ;; ;; Delcartive Org Capture Templates.
 ;; ;; creates a new interface for creating capture templates.
@@ -338,6 +334,44 @@ It also makes sure that all sub task are completed before a parent."
 ;;   :ensure t
 ;;   :commands (doct))
 
+
+;; (add-to-list 'org-latex-classes
+;;              '("altacv" "\\documentclass[10pt,a4paper,ragged2e,withhyper]{altacv}
+
+;; % Change the page layout if you need to
+;; \\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+
+;; % Use roboto and lato for fonts
+;; \\renewcommand{\\familydefault}{\\sfdefault}
+
+;; % Change the colours if you want to
+;; \\definecolor{SlateGrey}{HTML}{2E2E2E}
+;; \\definecolor{LightGrey}{HTML}{666666}
+;; \\definecolor{DarkPastelRed}{HTML}{450808}
+;; \\definecolor{PastelRed}{HTML}{8F0D0D}
+;; \\definecolor{GoldenEarth}{HTML}{E7D192}
+;; \\colorlet{name}{black}
+;; \\colorlet{tagline}{PastelRed}
+;; \\colorlet{heading}{DarkPastelRed}
+;; \\colorlet{headingrule}{GoldenEarth}
+;; \\colorlet{subheading}{PastelRed}
+;; \\colorlet{accent}{PastelRed}
+;; \\colorlet{emphasis}{SlateGrey}
+;; \\colorlet{body}{LightGrey}
+
+;; % Change some fonts, if necessary
+;; \\renewcommand{\\namefont}{\\Huge\\rmfamily\\bfseries}
+;; \\renewcommand{\\personalinfofont}{\\footnotesize}
+;; \\renewcommand{\\cvsectionfont}{\\LARGE\\rmfamily\\bfseries}
+;; \\renewcommand{\\cvsubsectionfont}{\\large\\bfseries}
+
+;; % Change the bullets for itemize and rating marker
+;; % for \cvskill if you want to
+;; \\renewcommand{\\itemmarker}{{\\small\\textbullet}}
+;; \\renewcommand{\\ratingmarker}{\\faCircle}
+;; "
+
+;;                ("\\cvsection{%s}" . "\\cvsection*{%s}")))
 
 (provide 'org-setup)
 ;;; org-setup.el ends here

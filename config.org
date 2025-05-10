@@ -1,0 +1,473 @@
+#+Title Emacs 30.1 Config
+#+Author Jachin Minyard
+#+Email jachinminyard@gmail.com
+#+PROPERTY: header-args :tangle ~/.emacs.d/init.el
+
+* Early Init
+#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
+  (setq frame-resize-pixelwise t
+        frame-inhibit-implied-resize t
+        frame-title-format '("Emacs"))
+
+  (setq inhibit-compacting-font-caches t)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+
+  (setq frame-inhibit-implied-resize t
+        frame-resize-pixelwise t)
+#+end_src
+
+* Start Up
+** Package Management
+Basic set up of the package manager to allow access to Elpa and Melpa
+#+begin_src emacs-lisp
+  ;; Package Managment
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+#+end_src
+
+*** Straight Package Manager
+Straight is a 3rd Party package manager that allows you to pull packages directly from github and other sources.
+I am not a big fan of using this but it is required to set up some additional language support.
+#+begin_src emacs-lisp
+  ;; Boot strap install of the straight package manager
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+          'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  
+#+end_src
+
+** Splash Screen
+Turn off the splash screen and put the user directly in to a file or the scratch buffer
+#+begin_src emacs-lisp
+  ;; StartUp Screen
+  (setq inhibit-startup-message t ; Dont show the start splash screen
+        initial-scratch-message "") ; Remove Scratch Text
+
+  (defun config/startup-message ()
+    (let ((uname user-full-name)
+  	(umail (format ";; Mail: %s" user-mail-address))
+  	(version (format ";; Version: %s" emacs-version))
+  	(sysconf (format ";; System Configuration: %s" system-configuration))
+  	(loadtime (format ";; Configuration Load Time: %s" (emacs-init-time)))
+  	(packagecount (format ";; Number of Packages: %d" (length package-activated-list)))
+  	(invoker invocation-name)
+  	(bounds (make-string 44 ?-)))
+      (with-current-buffer (get-buffer-create "*scratch*")
+        (insert (format ";; %s\n;; Welcome to Emacs, %s\n%s\n%s\n%s\n%s\n%s\n;; %s"
+  		      bounds uname version sysconf umail packagecount loadtime bounds)))))
+#+end_src
+
+** Emacs Use-Package
+#+begin_src emacs-lisp
+    (use-package emacs
+      :ensure nil
+      :bind
+      (("M-o" . other-window)
+       ("C-x C-b" . ibuffer) ; opens ibuffer over default
+       ("M-j" . duplicate-dwim)
+       ("M-g r" . recentf)
+       ("M-s g" . grep)
+       ("M-s f" . find-name-dired))
+      :init
+      (xterm-mouse-mode 1)
+      (global-auto-revert-mode 1) ; Auto reverts buffer if changed on disk
+      (repeat-mode 1) ; alows multi key commands to be repeated without full command
+      (indent-tabs-mode -1)
+      (recentf-mode 1) ; keep track of recent files
+      (savehist-mode 1) ; saves minibuffer history across sessions
+      (save-place-mode 1) ; Return to last place in file
+      (winner-mode)
+      (config/startup-message)
+  )
+#+end_src
+
+* GUI Customization's
+** Menus
+*** Tab-Bar
+#+begin_src emacs-lisp
+  ;; Tab Bar
+  (tab-bar-mode 1)
+  (setq tab-bar-close-button-show nil
+        tab-bar-new-button-show nil
+        tab-bar-tab-hints t)
+#+end_src
+
+*** Tool-Bar
+#+begin_src emacs-lisp
+  ;; Tool Bar
+  (modifier-bar-mode 1)
+  (setq tool-bar-style 'image)
+  (set-frame-parameter nil 'tool-bar-position 'right)
+#+end_src
+
+*** Scroll-Bar
+#+begin_src emacs-lisp
+  ;; Scrolling
+  (setq scroll-conservatively 8
+        scroll-margin 5
+        pixel-scroll-precision-mode t
+        pixel-scroll-precision-use-momentum nil)
+#+end_src
+
+** Fonts Style
+#+begin_src emacs-lisp
+  ;; Font Settings
+  (set-face-attribute 'default nil :height 130)
+#+end_src
+** Theme
+#+begin_src emacs-lisp
+  ;; Theme Setting
+  (load-theme 'modus-operandi-deuteranopia)  
+#+end_src
+** Mode Line
+#+begin_src emacs-lisp
+  ;; ModeLine
+  (setq column-number-mode 1
+        line-number-mode 1)
+#+end_src 
+
+* Quality of Life
+** Line Numbers
+#+begin_src emacs-lisp
+    ;; Line Numbers
+    (add-hook 'prog-mode-hook 'display-line-numbers-mode 1)
+    (setq display-line-numbers-width 2
+          display-line-numbers-widen t
+  	display-line-numbers-type 'relative)
+#+end_src
+
+** Delimiters
+*** Electric Pair
+Electric pair is a built in tool that auto closes delimiters and quotes
+#+begin_src emacs-lisp
+  ;; Delimiters
+  (electric-pair-mode 1)
+  (setq electric-pair-open-newline-between-pairs t
+        electric-pair-delete-adjacent-pairs t
+        electric-pair-preserve-balance t)
+#+end_src
+
+*** Rainbow Delimiters
+Rainbow-Delimiters is a third party package that colors matching delimiters.
+Allows for easier distinction between nested delimiters. 
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t)
+#+end_src
+
+** Spell Check
+*** Flyspell Programming Mode
+Adds spell checking to all programming mode and deritives.
+Flyspell will only check for word that are in comments and strings
+#+begin_src emacs-lisp
+  ;; Spell Check
+  (add-hook 'prog-mode #'flyspell-prog-mode)
+#+end_src
+
+*** Flyspell Mode
+Adds spell checking to various text modes
+#+begin_src emacs-lisp
+  (dolist (mode '(text-mode-hook org-mode-hook))
+    (add-hook mode (lambda () (flyspell-mode 1))))
+#+end_src
+
+*** Keybinds
+#+begin_src emacs-lisp
+  ;; Spell Check Keybinds
+  (dolist (mode '(flyspell-prog-mode-hook flyspell-mode-hook))
+    (add-hook mode (lambda()
+  		   (define-key flyspell-mode-map (kbd "C-s c") 'flyspell-correct-word-before-point)
+  		   (define-key flyspell-mode-map (kbd "C-s b") 'flyspell-buffer)
+  		   (define-key flyspell-mode-map (kbd "C-s a") 'ispell-buffer))))
+#+end_src
+
+** Which Key
+Which key mode provides auto completions for commands.
+Simply provide the prefix command and see the rest of the key options.
+#+begin_src emacs-lisp
+  ;; Which Key (builtin as of 30.1)
+  (which-key-mode 1)
+#+end_src
+** IBuffer
+The I buffer is a mini buffer that displays all other open buffers. This buffer can be customized with groups.
+These groups can be used to organize buffers of the same type.
+*** Groups
+#+begin_src emacs-lisp
+  ;; Ibuffer filters
+  (setq ibuffer-saved-filter-groups
+        '(("default"
+  	 ("Org" (or
+  		 (mode . org-mode)
+  		 (name . "^\\*Org Src")
+  		 (name . "^\\*Org Agenda\\*$")))
+  	 ("Rust" (or
+  		  (mode . rust-ts-mode)
+  		  (mode . rust-mode)
+  		  (name . "\\*.rs")))
+  	 ("Java" (or
+  		  (mode . java-mode)
+  		  (mode . java-ts-mode)
+  		  (name . "\\*.java")))
+  	 ("Janet" (or
+  		   (mode . janet-ts-mode)
+  		   (name . "\\*.janet")))
+  	 ("C Headers" (or
+  		       (name . "\\.h\\(pp\\|xx\\|++\\)?\\'")))
+  	 ("C Source Files" (or
+  			    (name . "\\.c\\(s\\|pp\\|xx\\|++\\)?\\'")))
+  	 ("Python" (or
+  		    (mode . python-mode)
+  		    (mode . python-ts-mode)
+  		    (name . "\\*.py")))
+  	 ("MarkDown" (or
+  		      (mode . markdown-mode)
+  		      (name . "\\*.md")))
+  	 ("Godot Script" (or
+  			  (mode . gdscript-mode)
+  			  (name . "\\*.gd")))
+  	 ("Shell/Bash" (or
+  			(mode . sh-mode)
+  			(mode . bash-ts-mode)))
+  	 ("Completions" (name . "^\\*Completions\\*$"))
+           ("emacs" (or
+                     (name . "^\\*scratch\\*$")
+                     (name . "^\\*Messages\\*$")
+                     (name . "^\\*Warnings\\*$")
+                     (name . "^\\*Shell Command Output\\*$")
+                     (name . "^\\*Async-native-compile-log\\*$")
+                     (name . "^\\*straight-")))
+           ("ediff" (or
+                     (name . "^\\*ediff.*")
+                     (name . "^\\*Ediff.*")))
+           ("dired" (mode . dired-mode))
+           ("terminal" (or
+                        (mode . term-mode)
+                        (mode . shell-mode)
+                        (mode . eshell-mode)))
+           ("help" (or
+                    (name . "^\\*Help\\*$")
+                    (name . "^\\*info\\*$")
+                    (name . "^\\*helpful"))))))
+#+end_src
+** Enable IBuffer
+#+begin_src emacs-lisp
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default")))
+  (setq ibuffer-show-empty-filter-groups nil) ; don't show empty groups
+#+end_src
+
+* Development
+** Completions
+This is a built in tool as of Emacs 30.1 and for classic code completions with an Emacs feel to it
+#+begin_src emacs-lisp
+  ;; Completions
+  (global-completion-preview-mode 1)
+  (add-hook 'prog-mode-hook #'completion-preview-mode)
+  (add-hook 'text-mode-hook #'completion-preview-mode)
+  (with-eval-after-load 'comint
+    (add-hook 'comint-mode-hook #'completion-preview-mode))
+
+  (with-eval-after-load 'completion-preview
+    (setq completion-preview-minimum-symbol-length 1)
+    (push 'org-self-insert-command completion-preview-commands)    
+    (keymap-set completion-preview-active-mode-map "M-n" #'completion-preview-next-candidate)
+    (keymap-set completion-preview-active-mode-map "M-p" #'completion-preview-prev-candidate)
+    (keymap-set completion-preview-active-mode-map "M-i" #'completion-preview-insert))
+#+end_src
+** Treesitter setup
+Add all the necessary tree sitter languages to 
+#+begin_src emacs-lisp
+  
+#+end_src
+
+** Languages
+*** Python
+#+begin_src emacs-lisp
+  ;; --Python--
+  (use-package python-ts-mode
+    :ensure nil
+    :hook ((python-ts-mode . eglot-ensure))
+    :mode (("\\.py\\'" . python-ts-mode)))
+#+end_src
+
+*** Java
+#+begin_src emacs-lisp
+  ;; --Java--
+  (use-package java-ts-mode
+    :ensure nil
+    :hook ((java-ts-mode . eglot-ensure))
+    :mode (("\\.java\\'" . java-ts-mode)))
+  (use-package eglot-java
+    :ensure t
+    :hook ((java-ts-mode . eglot-java-mode)))
+#+end_src
+
+*** C
+#+begin_src emacs-lisp
+  ;; --C--
+  (use-package c-ts-mode
+    :ensure nil
+    :hook ((c-ts-mode . eglot-ensure))
+    :mode (("\\.c\\'" . c-ts-mode)))
+#+end_src
+
+*** C++
+#+begin_src emacs-lisp
+  ;; --CPP--
+  (use-package c++-ts-mode
+    :ensure nil
+    :hook ((c++-ts-mode . eglot-ensure))
+    :mode (("\\.cpp\\'" . c++-ts-mode)))
+#+end_src
+
+*** Rust
+#+begin_src emacs-lisp
+  ;; --Rust--
+  (use-package rust-ts-mode
+    :ensure nil
+    :hook ((rust-ts-mode . eglot-ensure))
+    :mode (("\\.rs\\'" . rust-ts-mode)))
+#+end_src
+
+*** Janet
+#+begin_src emacs-lisp
+  ;; --Janet--
+  ; Add Janet to the treesitter list
+  (setq treesit-language-source-alist
+        (if (eq 'windows-nt system-type)
+            '((janet-simple
+               . ("https://github.com/sogaiu/tree-sitter-janet-simple"
+                  nil nil "gcc.exe")))
+          '((janet-simple
+             . ("https://github.com/sogaiu/tree-sitter-janet-simple")))))
+
+  ; If language not install install it.
+  (when (not (treesit-language-available-p 'janet-simple))
+    (treesit-install-language-grammar 'janet-simple))
+
+  ; Grab Janet ts mode with straight
+  (straight-use-package '(janet-ts-mode
+  			:host github
+  			:repo "sogaiu/janet-ts-mode"
+  			:files ("*.el")))
+  (use-package janet-ts-mode
+    :straight t)
+#+end_src
+
+*** Godot Script
+#+begin_src emacs-lisp
+  ;; GDScript (Godot)
+  (use-package gdscript-mode
+    :ensure t
+    :hook ((gdscript-mode . eglot-ensure))
+    :custom (gdscript-eglot-version 4.3))
+#+end_src
+*** Racket
+#+begin_src emacs-lisp
+    (use-package racket-mode
+      :ensure t)
+#+end_src
+
+*** Markdown
+#+begin_src emacs-lisp
+  ;; MarkDown
+  (use-package markdown-mode
+    :ensure t
+    :mode ("README\\.md\\'" . gfm-mode)
+    :init (setq markdown-command "multimarkdown")
+    :bind (:map markdown-mode-map
+                ("C-c C-e" . markdown-do)))
+#+end_src
+
+** Eglot
+#+begin_src emacs-lisp
+  ;; Eglot (handles lsp)
+  (setq eglot-report-progress nil)
+#+end_src
+
+** Version Control
+#+begin_src emacs-lisp
+  ;; Version Control
+  (setq straight-default-vc 'git
+        straight-vc-git-auto-fast-forward t
+        straight-vc-git-default-protocol 'ssh)
+#+end_src
+
+** Formating
+#+begin_src emacs-lisp
+  ;; Padline
+  (defun pad-line (length)
+    (interactive "nTarget line length: ")
+    (let*((line-start (line-beginning-position))
+  	(line-end (line-end-position))
+  	(line-length (- line-end line-start))
+  	(pad-amount (- length line-length)))
+      (when (> pad-amount 0)
+        (save-excursion
+  	(goto-char line-end)
+  	(insert (make-string pad-amount ?-))))))
+  
+#+end_src
+* Org Mode
+** Helper Functions
+#+begin_src emacs-lisp :tangle ~/Emacs-Stuff/Config/org-mode-setup.el
+
+#+end_src
+
+** Setup Hook
+#+begin_src emacs-lisp :tangle ~/Emacs-Stuff/Config/org-mode-setup.el
+  ;; (defun config/org-mode-setup ()
+  ;;   (org-indent-mode)
+  ;;   (variable-pitch-mode 1)
+  ;;   (auto-fill-mode 0)
+  ;;   (visual-line-mode 1))
+#+end_src
+
+** Org-mode
+#+begin_src emacs-lisp
+  ;; (require 'org-indent)
+  ;; (use-package org
+  ;;   :ensure nil
+  ;;   :hook (org-mode . config/org-mode-setup)
+  ;;   :config
+  ;;   (setq org-hide-emphasis-markers t))
+
+  ;; ; adjust the height of org headers
+  ;; (dolist (face '((org-level-1 . 1.2)
+  ;; 		(org-level-2 . 1.1)
+  ;; 		(org-level-3 . 1.05)
+  ;; 		(org-level-4 . 1.0)
+  ;; 		(org-level-5 . 1.0)
+  ;; 		(org-level-6 . 1.0)
+  ;; 		(org-level-7 . 1.0)
+  ;; 		(org-level-8 . 1.0)))
+  ;;   (set-face-attribute (car face) nil :weight 'regular :height (cdr face)))
+#+end_src
+** Org-Agenda
+#+begin_src emacs-lisp
+  (add-to-list 'load-path "~/Emacs-Stuff/Linux/Config/")
+  (use-package org-setup
+    :config
+    (setq org-directory "~/Emacs-Stuff/Org/")
+    (my-org-agenda-files '("school.org" "journal.org" "todo.org"))
+    (my-org-agenda)
+    (my-org-tags)
+    (my-org-logging)
+    (my-org-faces)
+    (my-org-todo))
+
+#+end_src
+** Org-Capture
