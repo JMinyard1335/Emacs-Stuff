@@ -453,13 +453,42 @@ Add all the necessary tree sitter languages to
   (defvar my-explain-prompt "Explain the code Like I am a 12yr old who understands the basics of codeing")
   (defvar my-optimize-prompt "How can one optimize the runtime and memory complexity of the following code? What algorithims and Data structures can be used to improve preformance.")
   (defvar my-review-prompt "Look at the following code and review it for bugs. Check all bounds of arrays if there are any, Check for dead code blocks or infeasable decisions, Give an evluation of run time and memory usage.")
-  (defvar my-test-prompt "")
+  (defvar my-test-prompt "Write a test for this function. Focus on Statement Coverage, Decision Coverage, ")
+
+  (defun jm/tab-binds()
+    (interactive)
+    (cond
+     ((derived-mode-p 'org-mode)
+      (progn
+        (message "Org-Cycle")
+        (or (org-cycle)
+            (copilot-accept-completion))))
+     
+     ((derived-mode-p 'minibuffer-mode)
+      (progn
+        (message "Minibuffer completion")
+        (minibuffer-complete)))
+     
+     ((bound-and-true-p completion-in-region-active)
+      (progn
+        (message "Attempting to complete preview")
+        (completion-at-point)))
+     
+     (t (progn
+          (message "Default Tab Functionality")
+          (or (copilot-accept-completion)
+              (indent-for-tab-command)
+  	    (completion-at-point))))))
+
 
   (use-package copilot
     :ensure t)
+  (define-key global-map (kbd "<tab>") #'jm/tab-binds)
+
 
   (use-package copilot-chat
     :ensure t
+    :hook (copilot-chat . visual-line-mode)
     :config
     (setq copilot-chat-prompt-doc my-doc-prompt
           copilot-chat-prompt-fix my-fix-prompt
@@ -467,15 +496,20 @@ Add all the necessary tree sitter languages to
           copilot-chat-prompt-optimize my-optimize-prompt
           copilot-chat-prompt-review my-review-prompt
           copilot-chat-prompt-test my-test-prompt)
+    
     (setq copilot-chat-frontend 'org
-  	copilot-chat-follow t
-  	copilot-chat-default-save-dir "~/Documents/AI_Chats/")
+  	copilot-chat-follow nil
+  	copilot-chat-default-save-dir "~/Documents/AI_Chats/"
+  	copilot-chat-use-copilot-instruction-files t
+  	copilot-chat-use-git-commit-instruction-files t)
+    
     :bind (:map global-map
   	      ("C-< c" . copilot-chat)
   	      ("C-< h" . copilot-chat-hide)
   	      ("C-< k" . copilot-chat-kill-instance)
   	      ("C-< i" . copilot-chat-goto-input)
   	      ("C-< a" . copilot-chat-add-file)
+  	      ("C-< l" . copilot-chat-list)
   	      ("C-< n" . copilot-chat-prompt-history-next)
   	      ("C-< p" . copilot-chat-prompt-history-previous)	 
   	      ("C-< e" . copilot-chat-explain)
@@ -485,6 +519,8 @@ Add all the necessary tree sitter languages to
   	      ("C-< f" . copilot-chat-fix)
   	      ("C-< t" . copilot-chat-test)
   	      ("C-< b" . copilot-chat-review-whole-buffer)
+  	      ("C-< y" . copilot-chat-yank)
+  	      ("C-< C-y" . copilot-chat-yank-pop)
   	      ("C-< C-s" . copilot-chat-save)
   	      ("C-< C-l" . copilot-chat-load)
   	      ("C-< C-s" . copilot-chat-reset)))
