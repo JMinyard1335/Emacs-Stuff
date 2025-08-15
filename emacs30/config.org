@@ -129,7 +129,7 @@ Turn off the splash screen and put the user directly in to a file or the scratch
 ** Theme
 #+begin_src emacs-lisp
   ;; Theme Setting
-  (load-theme 'modus-operandi-deuteranopia)  
+  (load-theme 'wombat)  
 #+end_src
 ** Mode Line
 #+begin_src emacs-lisp
@@ -210,6 +210,7 @@ These groups can be used to organize buffers of the same type.
   ;; Ibuffer filters
   (setq ibuffer-saved-filter-groups
         '(("default"
+  	 ("Chat" (or (name . "Copilot Chat .*")))
   	 ("Org" (or
   		 (mode . org-mode)
   		 (name . "^\\*Org Src")
@@ -237,6 +238,7 @@ These groups can be used to organize buffers of the same type.
   		      (mode . markdown-mode)
   		      (name . "\\*.md")))
   	 ("Godot Script" (or
+  			  (mode . gdscript-ts-mode)
   			  (mode . gdscript-mode)
   			  (name . "\\*.gd")))
   	 ("Shell/Bash" (or
@@ -308,6 +310,13 @@ Add all the necessary tree sitter languages to
   	  (gdscript . ("https://github.com/PrestonKnopp/tree-sitter-gdscript")))))
 #+end_src
 
+** Eglot
+#+begin_src emacs-lisp
+  ;; Eglot (handles lsp)
+  (setq eglot-report-progress nil)
+  
+#+end_src
+
 ** Languages
 *** Python
 #+begin_src emacs-lisp
@@ -369,10 +378,14 @@ Add all the necessary tree sitter languages to
   			:host github
   			:repo "sogaiu/janet-ts-mode"
   			:files ("*.el")))
+  (defun enable-jlsp ()
+    (add-to-list 'eglot-server-programs 
+                 '(janet-ts-mode . ("janet-lsp"))))
 
   (use-package janet-ts-mode
     :straight t
-    :hook ((janet-ts-mode . eglot-ensure)
+    :hook ((janet-ts-mode . enable-jlsp)
+  	 (janet-ts-mode . eglot-ensure)
   	 (janet-ts-mode . flyspell-prog-mode)))
 #+end_src
 
@@ -414,12 +427,6 @@ Add all the necessary tree sitter languages to
     :init (setq markdown-command "multimarkdown")
     :bind (:map markdown-mode-map
                 ("C-c C-e" . markdown-do)))
-#+end_src
-
-** Eglot
-#+begin_src emacs-lisp
-  ;; Eglot (handles lsp)
-  (setq eglot-report-progress nil)
 #+end_src
 
 ** Version Control
@@ -478,7 +485,7 @@ Add all the necessary tree sitter languages to
           (message "Default Tab Functionality")
           (or (copilot-accept-completion)
               (indent-for-tab-command)
-  	    (completion-at-point))))))
+  	    (completion-preview-complete))))))
 
 
   (use-package copilot
@@ -523,6 +530,6 @@ Add all the necessary tree sitter languages to
   	      ("C-< C-y" . copilot-chat-yank-pop)
   	      ("C-< C-s" . copilot-chat-save)
   	      ("C-< C-l" . copilot-chat-load)
-  	      ("C-< C-s" . copilot-chat-reset)))
+  	      ("C-< C-r" . copilot-chat-reset)))
 
 #+end_src
